@@ -38,7 +38,7 @@ h1{
 }
 
 .article{
-  width: 300px;
+  width: 200px;
 }
 
 .jumbotron-fluid{
@@ -50,8 +50,14 @@ h1{
 .itemImage{
   width: 70%;
   height: 60%;
-  margin-bottom: 5px;
+  margin-bottom: 0px;
   margin-top: 0px;
+}
+
+.itemName{
+  text-decoration: none;
+  color: black;
+  margin-bottom: 0px;
 }
 
 .priceDisplay{
