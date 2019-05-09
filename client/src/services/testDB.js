@@ -1,0 +1,29 @@
+
+const scrapedItems = [
+    {
+        _id: "5ccbb9e501f9037c5b0efc79",
+        name: "Barefoot Dreams® CozyChic® CardiganBarefoot Dreams® CozyChic® Cardigan",
+        src: "https://n.nordstrommedia.com/ImageGallery/store/product/Zoom/17/_10452...",
+        link: "https://shop.nordstrom.com/s/barefoot-dreams-cozychic-cardigan/5272595...",
+        price: [
+            { prev: "$69.95" },
+            { curr: "$49.96" },
+            { discount: "25% off" }],
+        type: "shopping",
+    },
+    { _id: "5ccbb9e501f9037c5b0efc77", "name": "Barefoot Dreams® CozyChic® CardiganBarefoot Dreams® CozyChic® Cardigan", "src": "https://n.nordstrommedia.com/ImageGallery/store/product/Zoom/17/_104528537.jpg?h=365&w=240&dpr=2&quality=45&fit=fill&fm=jpg", "link": "https://shop.nordstrom.com/s/barefoot-dreams-cozychic-cardigan/5272595?origin=category-personalizedsort&breadcrumb=Home%2FSale%2FWomen&color=amethyst", "price": { "prev": "$134.00", "curr": "$67.00", "discount": "50% off" }, "type": "shopping" },
+    { _id: "5ccbb9e501f9037c5b0efc7a", "name": "New Balance 696 Sneaker (Women)New Balance 696 Sneaker (Women)", "src": "https://n.nordstrommedia.com/ImageGallery/store/product/Zoom/9/_104342349.jpg?h=365&w=240&dpr=2&quality=45&fit=fill&fm=jpg", "link": "https://shop.nordstrom.com/s/new-balance-696-sneaker-women/5318397?origin=category-personalizedsort&breadcrumb=Home%2FSale%2FWomen&color=burgundy", "price": { "prev": "$79.95", "curr": "$53.56", "discount": "33% off" }, "type": "shopping" },
+    { _id: "5ccbb9e501f9037c5b0efc7b", "name": "BP. Linen Blend Camisole TopBP. Linen Blend Camisole Top", "src": "https://n.nordstrommedia.com/ImageGallery/store/product/Zoom/19/_104970759.jpg?h=365&w=240&dpr=2&quality=45&fit=fill&fm=jpg", "link": "https://shop.nordstrom.com/s/bp-linen-blend-camisole-top/5303524?origin=category-personalizedsort&breadcrumb=Home%2FSale%2FWomen&color=yellow%20whip%20candy%20stripe", "price": { "prev": "$35.00", "curr": "$20.98", "discount": "40% off" }, "type": "shopping" },
+    { _id: "5ccbb9e501f9037c5b0efc7c", "name": "Tory Burch Ines Slide Sandal (Women)Tory Burch Ines Slide Sandal (Women)", "src": "https://n.nordstrommedia.com/ImageGallery/store/product/Zoom/0/_104329320.jpg?h=365&w=240&dpr=2&quality=45&fit=fill&fm=jpg", "link": "https://shop.nordstrom.com/s/tory-burch-ines-slide-sandal-women/5316293?origin=category-personalizedsort&breadcrumb=Home%2FSale%2FWomen&color=garden%20sage%20%2F%20silver", "price": { "prev": "$228.00", "curr": "$152.76", "discount": "Up to 33% off selected colors" }, "type": "shopping" },
+    { _id: "5ccbb9e501f9037c5b0efc85", "name": "Madewell Whisper Cotton V-Neck TankMadewell Whisper Cotton V-Neck Tank", "src": "https://n.nordstrommedia.com/ImageGallery/store/product/Zoom/4/_101020624.jpg?h=365&w=240&dpr=2&quality=45&fit=fill&fm=jpg", "link": "https://shop.nordstrom.com/s/madewell-whisper-cotton-v-neck-tank/4624256?origin=category-personalizedsort&breadcrumb=Home%2FSale%2FWomen&color=optic%20white", "price": { "prev": "$18.50", "curr": "$14.50", "discount": "20% off" }, "type": "shopping" },
+    { _id: "5ccbb9e501f9037c5b0efc83", "name": "Leith Pleated Surplice Dress (Regular & Plus Size)Leith Pleated Surplice Dress (Regular & Plus Size)", "src": "https://n.nordstrommedia.com/ImageGallery/store/product/Zoom/2/_104604182.jpg?h=365&w=240&dpr=2&quality=45&fit=fill&fm=jpg", "link": "https://shop.nordstrom.com/s/leith-pleated-surplice-dress-regular-plus-size/5036970?origin=category-personalizedsort&breadcrumb=Home%2FSale%2FWomen&color=navy%20peacoat", "price": { "prev": "$75.00", "curr": "$37.49", "discount": "50% off" }, "type": "shopping" },
+    { _id: "5ccbb9e501f9037c5b0efc84", "name": "Sam Edelman 'Patti' Ankle Strap Sandal (Women)Sam Edelman 'Patti' Ankle Strap Sandal (Women)", "src": "https://n.nordstrommedia.com/ImageGallery/store/product/Zoom/1/_104822141.jpg?h=365&w=240&dpr=2&quality=45&fit=fill&fm=jpg", "link": "https://shop.nordstrom.com/s/sam-edelman-patti-ankle-strap-sandal-women/5276575?origin=category-personalizedsort&breadcrumb=Home%2FSale%2FWomen&color=classic%20nude%20leather", "price": { "prev": "$99.95", "curr": "$69.96", "discount": "30% off" }, "type": "shopping" },
+    { _id: "5ccbb9e501f9037c5b0efc8a", "name": "Tory Burch 'Minnie' Travel Ballet Flat (Women)Tory Burch 'Minnie' Travel Ballet Flat (Women)", "src": "https://n.nordstrommedia.com/ImageGallery/store/product/Zoom/1/_104854341.jpg?h=365&w=240&dpr=2&quality=45&fit=fill&fm=jpg", "link": "https://shop.nordstrom.com/s/tory-burch-minnie-travel-ballet-flat-women/5315737?origin=category-personalizedsort&breadcrumb=Home%2FSale%2FWomen&color=dark%20azalea%2F%20dark%20azalea", "price": { "prev": "$228.00", "curr": "$152.76", "discount": "33% off" }, "type": "shopping" },
+    { _id: "5ccbb9e501f9037c5b0efc88", "name": "All in Favor Patterned Drape Front BlouseAll in Favor Patterned Drape Front Blouse", "src": "https://n.nordstrommedia.com/ImageGallery/store/product/Zoom/5/_105126625.jpg?h=365&w=240&dpr=2&quality=45&fit=fill&fm=jpg", "link": "https://shop.nordstrom.com/s/all-in-favor-patterned-drape-front-blouse/5040096?origin=category-personalizedsort&breadcrumb=Home%2FSale%2FWomen&color=sky%20blue", "price": { "prev": "$49.00", "curr": "$29.40", "discount": "40% off" }, "type": "shopping" },
+    { _id: "5ccbb9e501f9037c5b0efc8f", "name": "Tory Burch Colorblock Espadrille Flat (Women)Tory Burch Colorblock Espadrille Flat (Women)", "src": "https://n.nordstrommedia.com/ImageGallery/store/product/Zoom/9/_104855149.jpg?h=365&w=240&dpr=2&quality=45&fit=fill&fm=jpg", "link": "https://shop.nordstrom.com/s/tory-burch-colorblock-espadrille-flat-women/5315741?origin=category-personalizedsort&breadcrumb=Home%2FSale%2FWomen&color=navy%20multi%2F%20ruby%20red", "price": { "prev": "$158.00", "curr": "$105.86", "discount": "Up to 33% off selected colors" }, "type": "shopping" }
+];
+
+export function getClothes(id) {
+    return scrapedItems;
+}
+
