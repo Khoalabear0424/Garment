@@ -9,7 +9,6 @@ class Article extends Component {
         const { name, imgSrc, link, prev, curr, discount } = this.props
 
         return (
-            // <div className="container  m-4" data-id="1">
             <figure className="figure article m-4">
                 <img src={imgSrc} className="figure-img img-fluid rounded" alt="" />
                 <figcaption className="figure-caption">
@@ -22,7 +21,6 @@ class Article extends Component {
                     <span className="percentOff"> {discount} </span>
                 </figcaption>
             </figure>
-            // </ div>
         )
     }
 }
