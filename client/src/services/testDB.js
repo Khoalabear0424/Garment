@@ -1,16 +1,5 @@
 
 const scrapedItems = [
-    {
-        _id: "5ccbb9e501f9037c5b0efc79",
-        name: "Barefoot Dreams® CozyChic® CardiganBarefoot Dreams® CozyChic® Cardigan",
-        src: "https://n.nordstrommedia.com/ImageGallery/store/product/Zoom/17/_10452...",
-        link: "https://shop.nordstrom.com/s/barefoot-dreams-cozychic-cardigan/5272595...",
-        price: [
-            { prev: "$69.95" },
-            { curr: "$49.96" },
-            { discount: "25% off" }],
-        type: "shopping",
-    },
     { _id: "5ccbb9e501f9037c5b0efc77", "name": "Barefoot Dreams® CozyChic® CardiganBarefoot Dreams® CozyChic® Cardigan", "src": "https://n.nordstrommedia.com/ImageGallery/store/product/Zoom/17/_104528537.jpg?h=365&w=240&dpr=2&quality=45&fit=fill&fm=jpg", "link": "https://shop.nordstrom.com/s/barefoot-dreams-cozychic-cardigan/5272595?origin=category-personalizedsort&breadcrumb=Home%2FSale%2FWomen&color=amethyst", "price": { "prev": "$134.00", "curr": "$67.00", "discount": "50% off" }, "type": "shopping" },
     { _id: "5ccbb9e501f9037c5b0efc7a", "name": "New Balance 696 Sneaker (Women)New Balance 696 Sneaker (Women)", "src": "https://n.nordstrommedia.com/ImageGallery/store/product/Zoom/9/_104342349.jpg?h=365&w=240&dpr=2&quality=45&fit=fill&fm=jpg", "link": "https://shop.nordstrom.com/s/new-balance-696-sneaker-women/5318397?origin=category-personalizedsort&breadcrumb=Home%2FSale%2FWomen&color=burgundy", "price": { "prev": "$79.95", "curr": "$53.56", "discount": "33% off" }, "type": "shopping" },
     { _id: "5ccbb9e501f9037c5b0efc7b", "name": "BP. Linen Blend Camisole TopBP. Linen Blend Camisole Top", "src": "https://n.nordstrommedia.com/ImageGallery/store/product/Zoom/19/_104970759.jpg?h=365&w=240&dpr=2&quality=45&fit=fill&fm=jpg", "link": "https://shop.nordstrom.com/s/bp-linen-blend-camisole-top/5303524?origin=category-personalizedsort&breadcrumb=Home%2FSale%2FWomen&color=yellow%20whip%20candy%20stripe", "price": { "prev": "$35.00", "curr": "$20.98", "discount": "40% off" }, "type": "shopping" },

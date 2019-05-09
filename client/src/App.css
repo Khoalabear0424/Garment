@@ -38,7 +38,7 @@ h1{
 }
 
 .article{
-  width: 200px;
+  width: 200px !important;
 }
 
 .jumbotron-fluid{
@@ -77,3 +77,4 @@ h1{
   /* font-size: 12px; */
   font-style: italic; 
 }
+
