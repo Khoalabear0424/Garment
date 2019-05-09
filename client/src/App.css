@@ -31,3 +31,43 @@
     transform: rotate(360deg);
   }
 }
+
+/*------------------- Article -----------------------*/
+h1{
+  color: red;
+}
+
+.article{
+  width: 300px;
+}
+
+.jumbotron-fluid{
+  border-radius: 5px !important;
+  padding-top: 2px;
+  padding-bottom: 2px;
+}
+
+.itemImage{
+  width: 70%;
+  height: 60%;
+  margin-bottom: 5px;
+  margin-top: 0px;
+}
+
+.priceDisplay{
+  margin-bottom: 0px;
+}
+
+.originalPrice{
+  color: darkgrey;
+  text-decoration: line-through;
+}
+
+.price{
+  color: green;
+}
+
+.percentOff{
+  /* font-size: 12px; */
+  font-style: italic; 
+}
