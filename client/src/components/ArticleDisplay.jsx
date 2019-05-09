@@ -17,6 +17,10 @@ class ArticleDisplay extends Component {
                     <Article
                         name={a.name}
                         imgSrc={a.src}
+                        link={a.link}
+                        prev={a.price.prev}
+                        curr={a.price.curr}
+                        discount={a.price.discount}
                     />
                 )}
             </div>
