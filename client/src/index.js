@@ -7,6 +7,7 @@ import 'bootstrap/dist/css/bootstrap.css';
 import 'font-awesome/css/font-awesome.css';
 //import Article from './components/Article';
 //import ArticleDisplay from './components/ArticleDisplay';
+//import Navbar from './components/Navbar';
 
 ReactDOM.render(<App />, document.getElementById('root'));
 
