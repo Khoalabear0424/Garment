@@ -116,12 +116,10 @@ app.get("/scrape-madeWell", function (req, res) {
             var clothesArray = []
             var productName = document.querySelectorAll('.product-name');
             var prevPrice = document.querySelectorAll('.product-pricing');
-            // var currPrice = document.querySelectorAll('.product-name');
-            // var discountOff = document.querySelectorAll('.product-name');
             for (var i = 0; i < productName.length; i++) {
                 clothesArray[i] = {
                     name: productName[i].innerText.trim(),
-                    prev: prevPrice[i].children[0].innerText
+                    prev: prevPrice[i].children[0].innerText.split("\n")[0]
                 }
             }
             return clothesArray
