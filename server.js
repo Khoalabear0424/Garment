@@ -4,6 +4,7 @@ var request = require("request");
 var cheerio = require("cheerio");
 var app = express();
 var bodyParser = require('body-parser');
+const puppeteer = require('puppeteer');
 
 app.set('view engine', 'ejs');
 app.use(express.static("public"));
@@ -101,6 +102,29 @@ app.get("/scrape-nordStrom", function (req, res) {
             })
         })
     })
+})
+
+app.get("/scrape-madeWell", function (req, res) {
+    (async () => {
+        var browser = await puppeteer.launch({ headless: true });
+        var page = await browser.newPage();
+
+        await page.goto('https://www.madewell.com/womens/sale');
+        await page.waitForSelector('.product-tile-details');
+
+        var clothes = await page.evaluate(() => {
+            var clothesArray = []
+            var productName = document.querySelectorAll('.product-tile-details');
+            for (var i = 0; i < productName.length; i++) {
+                clothesArray[i] = {
+                    name: productName[i].innerText.trim()
+                }
+            }
+            console.log(clothesArray)
+        })
+
+        await browser.close();
+    })();
 })
 
 
