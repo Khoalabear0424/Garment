@@ -114,15 +114,24 @@ app.get("/scrape-madeWell", function (req, res) {
 
         var clothes = await page.evaluate(() => {
             var clothesArray = []
+
+            // var body = document.querySelector('body');
+            // var $ = cheerio.load(body);
+
             var productName = document.querySelectorAll('.product-name');
             var prevPrice = document.querySelectorAll('.product-pricing');
+            var imgLink = document.querySelectorAll('.primary-image');
             for (var i = 0; i < productName.length; i++) {
                 clothesArray[i] = {
                     name: productName[i].innerText.trim(),
-                    prev: prevPrice[i].children[0].innerText.split("\n")[0]
+                    prev: prevPrice[i].children[0].innerText.split("\n")[0],
+                    curr: prevPrice[i].children[1] ? prevPrice[i].children[1].innerText.trim() : false,
+                    img: imgLink[i].getAttribute('src')
                 }
             }
             return clothesArray
+
+            //return $('.product-name').html()
         })
         await browser.close();
         return clothes
