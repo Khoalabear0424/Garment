@@ -110,25 +110,28 @@ app.get("/scrape-madeWell", function (req, res) {
         var page = await browser.newPage();
 
         await page.goto('https://www.madewell.com/womens/sale');
-        await page.waitForSelector('.product-tile-details');
+        await page.waitForSelector('.product-standard-price');
 
         var clothes = await page.evaluate(() => {
-            // var clothesArray = []
-            // var productName = document.querySelectorAll('.product-tile-details');
-            // for (var i = 0; i < productName.length; i++) {
-            //     clothesArray[i] = {
-            //         name: productName[i].innerText.trim()
-            //     }
-            // }
-            return 1000
-            // console.log(clothesArray)
+            var clothesArray = []
+            var productName = document.querySelectorAll('.product-name');
+            var prevPrice = document.querySelectorAll('.product-pricing');
+            // var currPrice = document.querySelectorAll('.product-name');
+            // var discountOff = document.querySelectorAll('.product-name');
+            for (var i = 0; i < productName.length; i++) {
+                clothesArray[i] = {
+                    name: productName[i].innerText.trim(),
+                    prev: prevPrice[i].children[0].innerText
+                }
+            }
+            return clothesArray
         })
         await browser.close();
         return clothes
     };
 
     scrape().then((value) => {
-        console.log(value)
+        res.send(value)
     })
 
 
