@@ -84,14 +84,14 @@ app.get("/scrape-nordStrom", function (req, res) {
         $('article').each(function (i, elem) {
             db.scrapedData.insert({
                 name: $($($(this))).find('h3').children().children().text(),
+                brand: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1f/Nordstrom_Logo.svg/1280px-Nordstrom_Logo.svg.png",
                 src: $(this).find('div').find('img').attr('src'),
                 link: 'https://shop.nordstrom.com' + $(this).find('a').attr('href'),
                 price: {
                     prev: $($($(this))).find('div').eq(-2).children().last().text().split(" ")[0],
                     curr: $($($(this))).find('div').eq(-1).children().eq(-2).text().split(" ")[0],
                     discount: $($($(this))).find('div').eq(-1).children().last().html()
-                },
-                type: "shopping"
+                }
             }, function (error, newItem) {
                 if (error) {
                     console.log(error)

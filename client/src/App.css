@@ -30,6 +30,10 @@ h1{
   margin-bottom: 0px;
 }
 
+.brand{
+  width: 60%;
+}
+
 .priceDisplay{
   margin-bottom: 0px;
 }
@@ -45,5 +49,6 @@ h1{
 
 .percentOff{
   font-style: italic; 
+  font-size: 11px;
 }
 
