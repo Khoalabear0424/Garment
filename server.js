@@ -107,16 +107,19 @@ app.get("/scrape-nordStrom", function (req, res) {
 
 app.get("/scrape-madeWell", function (req, res) {
     let scrape = async () => {
+        function wait(ms) {
+            return new Promise(resolve => setTimeout(() => resolve(), ms));
+        }
         var browser = await puppeteer.launch({ headless: false });
         var page = await browser.newPage();
 
         await page.goto('https://www.madewell.com/womens/sale');
-        // await page.waitForSelector('.ui-button');
+        await page.waitForSelector('.ui-widget-overlay');
+        await page.click('.ui-button');
 
-        const [popup] = await Promise.all([
-            new Promise(resolve => page.once('popup', resolve)),
-            page.click('.ui-button'),
-        ]);
+        // Load the specified page
+        // const page = await browser.newPage();
+        // await page.goto(url, { waitUntil: 'load' });
 
         // Get the height of the rendered page
         const bodyHandle = await page.$('body');
@@ -130,17 +133,18 @@ app.get("/scrape-madeWell", function (req, res) {
             await page.evaluate(_viewportHeight => {
                 window.scrollBy(0, _viewportHeight);
             }, viewportHeight);
-            await wait(20);
+            await wait(2000);
             viewportIncr = viewportIncr + viewportHeight;
         }
 
-        // Scroll back to top
-        await page.evaluate(_ => {
-            window.scrollTo(0, 0);
-        });
+        // // Scroll back to top
+        // await page.evaluate(_ => {
+        //     window.scrollTo(0, 0);
+        // });
 
         // Some extra delay to let images load
         await wait(100);
+
 
         var clothes = await page.evaluate(() => {
             var clothesArray = []
@@ -148,6 +152,7 @@ app.get("/scrape-madeWell", function (req, res) {
             var productName = document.querySelectorAll('.product-name');
             var prevPrice = document.querySelectorAll('.product-pricing');
             var imgLink = document.querySelectorAll('.primary-image');
+
             for (var i = 0; i < productName.length; i++) {
 
                 var isDiscountExist = prevPrice[i].children[1] ? true : false;
@@ -157,6 +162,10 @@ app.get("/scrape-madeWell", function (req, res) {
                 console.log('Hello')
 
                 clothesArray[i] = {
+                    length: {
+                        productNameLength: productName.length,
+                        imgLinkLength: imgLink.length
+                    },
                     name: productName[i].innerText.trim(),
                     brand: "Madewell",
                     brandLogo: "https://cblproperty.blob.core.windows.net/production/assets/blt9984adfdc47a0340-Madewell_logo.png",
