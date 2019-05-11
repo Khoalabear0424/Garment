@@ -122,10 +122,16 @@ app.get("/scrape-madeWell", function (req, res) {
             var prevPrice = document.querySelectorAll('.product-pricing');
             var imgLink = document.querySelectorAll('.primary-image');
             for (var i = 0; i < productName.length; i++) {
+
+                var isDiscountExist = prevPrice[i].children[1] ? true : false;
+
+                var percentDiscount = isDiscountExist ? (prevPrice[i].children[0].innerText.split("\n")[0].slice(1) - prevPrice[i].children[1].innerText.slice(1)) / prevPrice[i].children[0].innerText.split("\n")[0].slice(1) : false;
+
                 clothesArray[i] = {
                     name: productName[i].innerText.trim(),
-                    prev: prevPrice[i].children[0].innerText.split("\n")[0],
-                    curr: prevPrice[i].children[1] ? prevPrice[i].children[1].innerText.trim() : false,
+                    prev: isDiscountExist ? prevPrice[i].children[0].innerText.split("\n")[0] : false,
+                    curr: isDiscountExist ? prevPrice[i].children[1].innerText : prevPrice[i].children[0].innerText.split("\n")[0],
+                    dicsount: prevPrice[i].children[1] ? Math.floor(percentDiscount * 100) + "%" : false,
                     img: imgLink[i].getAttribute('src')
                 }
             }
