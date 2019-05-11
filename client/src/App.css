@@ -2,6 +2,12 @@
   text-align: center;
 }
 
+
+/*------------------- NavBar -----------------------*/
+.navbar{
+  background-color: #FFB6C1
+}
+
 /*------------------- Article -----------------------*/
 h1{
   color: red;
@@ -27,6 +33,12 @@ h1{
 .itemName{
   text-decoration: none;
   color: black;
+  margin-bottom: 0px;
+}
+
+.itemName:hover{
+  text-decoration: none;
+  color: #f08080;
   margin-bottom: 0px;
 }
 
