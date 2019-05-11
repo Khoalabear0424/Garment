@@ -115,9 +115,6 @@ app.get("/scrape-madeWell", function (req, res) {
         var clothes = await page.evaluate(() => {
             var clothesArray = []
 
-            // var body = document.querySelector('body');
-            // var $ = cheerio.load(body);
-
             var productName = document.querySelectorAll('.product-name');
             var prevPrice = document.querySelectorAll('.product-pricing');
             var imgLink = document.querySelectorAll('.primary-image');
@@ -136,8 +133,6 @@ app.get("/scrape-madeWell", function (req, res) {
                 }
             }
             return clothesArray
-
-            //return $('.product-name').html()
         })
         await browser.close();
         return clothes
