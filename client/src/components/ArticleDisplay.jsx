@@ -1,16 +1,15 @@
 import React, { Component } from 'react';
-import { getClothes } from '../services/testDB';
+import { getClothes } from '../services/scrapeClothesService';
 import Article from './Article';
-import axios from 'axios';
 
 class ArticleDisplay extends Component {
     state = {
-        clothes: getClothes()
+        clothes: []
     }
 
-    componentDidMount() {
-        const promise = axios.get('http://localhost:3001/all-data');
-        console.log(promise)
+    async componentDidMount() {
+        const { data: clothes } = await getClothes();
+        this.setState({ clothes })
     }
 
     checkMethod = () => {
@@ -19,6 +18,7 @@ class ArticleDisplay extends Component {
     render() {
         return (
             <div>
+                {console.log(this.state.clothes)}
                 {this.state.clothes.map(a =>
                     <Article
                         key={a._id}
