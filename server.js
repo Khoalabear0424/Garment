@@ -4,6 +4,7 @@ var request = require("request");
 var cheerio = require("cheerio");
 var app = express();
 var bodyParser = require('body-parser');
+const puppeteer = require('puppeteer');
 
 app.set('view engine', 'ejs');
 app.use(express.static("public"));
@@ -102,6 +103,66 @@ app.get("/scrape-nordStrom", function (req, res) {
         })
     })
 })
+
+app.get("/scrape-madeWell", function (req, res) {
+    let scrape = async () => {
+        var browser = await puppeteer.launch({ headless: false });
+        var page = await browser.newPage();
+
+        await page.goto('https://www.madewell.com/womens/sale');
+        await page.waitForSelector('.product-standard-price');
+
+        var clothes = await page.evaluate(() => {
+            var clothesArray = []
+
+            // var body = document.querySelector('body');
+            // var $ = cheerio.load(body);
+
+            var productName = document.querySelectorAll('.product-name');
+            var prevPrice = document.querySelectorAll('.product-pricing');
+            var imgLink = document.querySelectorAll('.primary-image');
+            for (var i = 0; i < productName.length; i++) {
+
+                var isDiscountExist = prevPrice[i].children[1] ? true : false;
+
+                var percentDiscount = isDiscountExist ? (prevPrice[i].children[0].innerText.split("\n")[0].slice(1) - prevPrice[i].children[1].innerText.slice(1)) / prevPrice[i].children[0].innerText.split("\n")[0].slice(1) : false;
+
+                clothesArray[i] = {
+                    name: productName[i].innerText.trim(),
+                    prev: isDiscountExist ? prevPrice[i].children[0].innerText.split("\n")[0] : false,
+                    curr: isDiscountExist ? prevPrice[i].children[1].innerText : prevPrice[i].children[0].innerText.split("\n")[0],
+                    dicsount: prevPrice[i].children[1] ? Math.floor(percentDiscount * 100) + "%" : false,
+                    img: imgLink[i].getAttribute('src')
+                }
+            }
+            return clothesArray
+
+            //return $('.product-name').html()
+        })
+        await browser.close();
+        return clothes
+    };
+
+    scrape().then((value) => {
+        res.send(value)
+    })
+
+
+    // puppeteer.launch({ headless: false }).then(async browser => {
+    //     const page = await browser.newPage();
+    //     page
+    //         .waitForSelector('img')
+    //         .then(() => {
+    //             console.log('Success')
+    //             var productName = document.querySelectorAll('.product-tile-details');
+    //             console.log(productName)
+    //         });
+    //     await page.goto("https://www.madewell.com/womens/sale");
+
+    //     await browser.close();
+    // });
+})
+
 
 
 //----------------API----------------//
