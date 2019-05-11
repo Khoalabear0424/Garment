@@ -105,27 +105,48 @@ app.get("/scrape-nordStrom", function (req, res) {
 })
 
 app.get("/scrape-madeWell", function (req, res) {
-    (async () => {
-        var browser = await puppeteer.launch({ headless: true });
+    let scrape = async () => {
+        var browser = await puppeteer.launch({ headless: false });
         var page = await browser.newPage();
 
         await page.goto('https://www.madewell.com/womens/sale');
         await page.waitForSelector('.product-tile-details');
 
         var clothes = await page.evaluate(() => {
-            var clothesArray = []
-            var productName = document.querySelectorAll('.product-tile-details');
-            for (var i = 0; i < productName.length; i++) {
-                clothesArray[i] = {
-                    name: productName[i].innerText.trim()
-                }
-            }
-            console.log(clothesArray)
+            // var clothesArray = []
+            // var productName = document.querySelectorAll('.product-tile-details');
+            // for (var i = 0; i < productName.length; i++) {
+            //     clothesArray[i] = {
+            //         name: productName[i].innerText.trim()
+            //     }
+            // }
+            return 1000
+            // console.log(clothesArray)
         })
-
         await browser.close();
-    })();
+        return clothes
+    };
+
+    scrape().then((value) => {
+        console.log(value)
+    })
+
+
+    // puppeteer.launch({ headless: false }).then(async browser => {
+    //     const page = await browser.newPage();
+    //     page
+    //         .waitForSelector('img')
+    //         .then(() => {
+    //             console.log('Success')
+    //             var productName = document.querySelectorAll('.product-tile-details');
+    //             console.log(productName)
+    //         });
+    //     await page.goto("https://www.madewell.com/womens/sale");
+
+    //     await browser.close();
+    // });
 })
+
 
 
 //----------------API----------------//
