@@ -85,7 +85,8 @@ app.get("/scrape-nordStrom", function (req, res) {
         $('article').each(function (i, elem) {
             db.scrapedData.insert({
                 name: $($($(this))).find('h3').children().children().text(),
-                brand: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1f/Nordstrom_Logo.svg/1280px-Nordstrom_Logo.svg.png",
+                brand: "Nordstrom",
+                brandLogo: "https://brickworks-media-production.s3.amazonaws.com/logo/6/madewell-logo.png",
                 src: $(this).find('div').find('img').attr('src'),
                 link: 'https://shop.nordstrom.com' + $(this).find('a').attr('href'),
                 price: {
@@ -110,7 +111,36 @@ app.get("/scrape-madeWell", function (req, res) {
         var page = await browser.newPage();
 
         await page.goto('https://www.madewell.com/womens/sale');
-        await page.waitForSelector('.product-standard-price');
+        // await page.waitForSelector('.ui-button');
+
+        const [popup] = await Promise.all([
+            new Promise(resolve => page.once('popup', resolve)),
+            page.click('.ui-button'),
+        ]);
+
+        // Get the height of the rendered page
+        const bodyHandle = await page.$('body');
+        const { height } = await bodyHandle.boundingBox();
+        await bodyHandle.dispose();
+
+        // Scroll one viewport at a time, pausing to let content load
+        const viewportHeight = page.viewport().height;
+        let viewportIncr = 0;
+        while (viewportIncr + viewportHeight < height) {
+            await page.evaluate(_viewportHeight => {
+                window.scrollBy(0, _viewportHeight);
+            }, viewportHeight);
+            await wait(20);
+            viewportIncr = viewportIncr + viewportHeight;
+        }
+
+        // Scroll back to top
+        await page.evaluate(_ => {
+            window.scrollTo(0, 0);
+        });
+
+        // Some extra delay to let images load
+        await wait(100);
 
         var clothes = await page.evaluate(() => {
             var clothesArray = []
@@ -124,12 +154,19 @@ app.get("/scrape-madeWell", function (req, res) {
 
                 var percentDiscount = isDiscountExist ? (prevPrice[i].children[0].innerText.split("\n")[0].slice(1) - prevPrice[i].children[1].innerText.slice(1)) / prevPrice[i].children[0].innerText.split("\n")[0].slice(1) : false;
 
+                console.log('Hello')
+
                 clothesArray[i] = {
                     name: productName[i].innerText.trim(),
-                    prev: isDiscountExist ? prevPrice[i].children[0].innerText.split("\n")[0] : false,
-                    curr: isDiscountExist ? prevPrice[i].children[1].innerText : prevPrice[i].children[0].innerText.split("\n")[0],
-                    dicsount: prevPrice[i].children[1] ? Math.floor(percentDiscount * 100) + "%" : false,
-                    img: imgLink[i].getAttribute('src')
+                    brand: "Madewell",
+                    brandLogo: "https://cblproperty.blob.core.windows.net/production/assets/blt9984adfdc47a0340-Madewell_logo.png",
+                    src: imgLink[i].getAttribute('src'),
+                    link: productName[i].children[0].getAttribute('href'),
+                    price: {
+                        prev: isDiscountExist ? prevPrice[i].children[0].innerText.split("\n")[0] : false,
+                        curr: isDiscountExist ? prevPrice[i].children[1].innerText : prevPrice[i].children[0].innerText.split("\n")[0],
+                        discount: prevPrice[i].children[1] ? Math.floor(percentDiscount * 100) + "% off" : false
+                    }
                 }
             }
             return clothesArray
@@ -139,6 +176,26 @@ app.get("/scrape-madeWell", function (req, res) {
     };
 
     scrape().then((value) => {
+        for (var i in value) {
+            db.scrapedData.insert({
+                name: value[i].name,
+                brand: value[i].brand,
+                brandLogo: value[i].brandLogo,
+                src: value[i].src,
+                link: value[i].link,
+                price: {
+                    prev: value[i].price.prev,
+                    curr: value[i].price.curr,
+                    discount: value[i].price.discount
+                }
+            }, function (error, newItem) {
+                if (error) {
+                    console.log(error)
+                } else {
+                    console.log(`Added item ${i}`);
+                }
+            })
+        }
         res.send(value)
     })
 

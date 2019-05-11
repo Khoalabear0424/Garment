@@ -28,6 +28,7 @@ class ArticleDisplay extends Component {
                         prev={a.price.prev}
                         curr={a.price.curr}
                         discount={a.price.discount}
+                        brandLogo={a.brandLogo}
                         brand={a.brand}
                     />
                 )}

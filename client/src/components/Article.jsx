@@ -6,7 +6,7 @@ class Article extends Component {
 
     render() {
 
-        const { name, imgSrc, link, prev, curr, discount, brand } = this.props
+        const { name, imgSrc, link, prev, curr, discount, brandLogo } = this.props
 
         return (
             <figure className="figure article m-4">
@@ -19,7 +19,7 @@ class Article extends Component {
                     <span className="originalPrice">{prev}</span>
                     <span className="price"> {curr} </span>
                     <span className="percentOff"> {discount} </span>
-                    <img className="figure-img img-fluid rounded brand" src={brand} />
+                    <img className="figure-img img-fluid rounded brand" src={brandLogo} />
                 </figcaption>
             </figure>
         )
