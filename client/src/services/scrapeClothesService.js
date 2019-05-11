@@ -1,5 +1,6 @@
 import http from './httpService';
+import { apiUrl } from '../config.json'
 
 export function getClothes() {
-    return http.get('http://localhost:3001/all-data')
+    return http.get(apiUrl + "/" + "all-data")
 }
