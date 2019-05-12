@@ -79,7 +79,7 @@ app.get("/shopping", (req, res) => {
 //----------------WEB SCRAPE--------------//
 
 app.get("/scrape-nordStrom", function (req, res) {
-    let scrape = async () => {
+    async function scrape() {
         function wait(ms) {
             return new Promise(resolve => setTimeout(() => resolve(), ms));
         }
@@ -87,46 +87,37 @@ app.get("/scrape-nordStrom", function (req, res) {
         const browser = await puppeteer.launch({ headless: false });
         const page = await browser.newPage();
         await page.goto('https://shop.nordstrom.com/c/all-womens-sale');
-        await page.waitForSelector('.nui-icon');
 
-        const bodyHandle = await page.$('body');
-        const html = await page.evaluate(body => body.innerHTML, bodyHandle);
-        await bodyHandle.dispose();
-
-        await page.evaluate(body => {
-            var clothesArray = []
-            $ = cheerio.load(body);
-            res.send($('article'));
-
-            // var product = document.querySelectorAll('article');
-            // var imgLink = document.querySelectorAll('img');
-            // var productName = document.querySelectorAll('article > h3 > a > span > span');
-            // var nameLink = document.querySelectorAll('article > div > a');
-            // var price = document.querySelector('article > h3')
-
-            // for (let i = 0; i < price.length; i++) {
-            //     // var productLength = product[i].childElementCount == 4 ? 5 : product[i].childElementCount;
-            //     clothesArray[i] = {
-            //         name: productName[i].innerText,
-            //         src: imgLink[i].getAttribute('src'),
-            //         link: nameLink[i].getAttribute('href'),
-            //         prev: price[0].nextSibling.innerText
-            //     }
-            // }
-
-            // return clothesArray
+        let content = await page.content();
+        var $ = cheerio.load(content);
+        console.log($('article').html())
+        var data = []
+        $('article').each(function (i, elem) {
+            data[i] =
+                [
+                    { name: $($($(this))).find('h3').children().children().text() },
+                    { brand: "Nordstrom" },
+                    { brandLogo: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1f/Nordstrom_Logo.svg/1280px-Nordstrom_Logo.svg.png" },
+                    { src: $(this).find('div').find('img').attr('src') },
+                    { link: 'https://shop.nordstrom.com' + $(this).find('a').attr('href') },
+                    {
+                        price: {
+                            prev: $($($(this))).find('div').eq(-2).children().last().text().split(" ")[0],
+                            curr: $($($(this))).find('div').eq(-1).children().eq(-2).text().split(" ")[0],
+                            discount: $($($(this))).find('div').eq(-1).children().last().html()
+                        }
+                    }
+                ]
         })
-        await wait(2000);
-        await browser.close();
-        // return clothes
+        res.send(data)
+        await wait(1000)
+
+        browser.close();
+
     };
 
-    scrape().then((value) => {
-        for (let i in value) {
-            console.log(value[i].prev)
-        }
-        res.json(value)
-    });
+    scrape()
+
     // request('https://shop.nordstrom.com/c/all-womens-sale', function (error, response, body) {
     //     const $ = cheerio.load(body);
 
