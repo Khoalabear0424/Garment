@@ -117,34 +117,34 @@ app.get("/scrape-madeWell", function (req, res) {
         await page.waitForSelector('.ui-widget-overlay');
         await page.click('.ui-button');
 
-        // Load the specified page
-        // const page = await browser.newPage();
-        // await page.goto(url, { waitUntil: 'load' });
-
         // Get the height of the rendered page
         const bodyHandle = await page.$('body');
-        const { height } = await bodyHandle.boundingBox();
+        let { height } = await bodyHandle.boundingBox();
+        let totalHeight = height * 5;
         await bodyHandle.dispose();
 
         // Scroll one viewport at a time, pausing to let content load
         const viewportHeight = page.viewport().height;
         let viewportIncr = 0;
-        while (viewportIncr + viewportHeight < height) {
-            await page.evaluate(_viewportHeight => {
-                window.scrollBy(0, _viewportHeight);
-            }, viewportHeight);
-            await wait(100);
-            viewportIncr = viewportIncr + viewportHeight;
+        let loadMoreFlag = true;
+
+        while (height < totalHeight) {
+            while (viewportIncr + viewportHeight < (height - 1000)) {
+                await page.evaluate(_viewportHeight => {
+                    window.scrollBy(0, 500);
+                }, viewportHeight);
+                await wait(500);
+                viewportIncr = viewportIncr + viewportHeight;
+            }
+            if (loadMoreFlag) {
+                await page.click('.loadMoreButton');
+                loadMoreFlag = false;
+            }
+            await wait(1800);
+            height += 5000;
         }
 
-        // // Scroll back to top
-        // await page.evaluate(_ => {
-        //     window.scrollTo(0, 0);
-        // });
-
-        // Some extra delay to let images load
-        await wait(100);
-
+        await wait(500);
 
         var clothes = await page.evaluate(() => {
             var clothesArray = []
@@ -162,10 +162,6 @@ app.get("/scrape-madeWell", function (req, res) {
                 console.log('Hello')
 
                 clothesArray[i] = {
-                    length: {
-                        productNameLength: productName.length,
-                        imgLinkLength: imgLink.length
-                    },
                     name: productName[i].innerText.trim(),
                     brand: "Madewell",
                     brandLogo: "https://brickworks-media-production.s3.amazonaws.com/logo/6/madewell-logo.png",
