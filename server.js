@@ -84,64 +84,57 @@ app.get("/scrape-nordStrom", function (req, res) {
             return new Promise(resolve => setTimeout(() => resolve(), ms));
         }
 
-        const browser = await puppeteer.launch({ headless: false });
+        const browser = await puppeteer.launch({ headless: false, defaultViewport: null });
         const page = await browser.newPage();
         await page.goto('https://shop.nordstrom.com/c/all-womens-sale');
 
-        let content = await page.content();
-        var $ = cheerio.load(content);
-        console.log($('article').html())
-        var data = []
-        $('article').each(function (i, elem) {
-            data[i] =
-                [
-                    { name: $($($(this))).find('h3').children().children().text() },
-                    { brand: "Nordstrom" },
-                    { brandLogo: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1f/Nordstrom_Logo.svg/1280px-Nordstrom_Logo.svg.png" },
-                    { src: $(this).find('div').find('img').attr('src') },
-                    { link: 'https://shop.nordstrom.com' + $(this).find('a').attr('href') },
-                    {
-                        price: {
-                            prev: $($($(this))).find('div').eq(-2).children().last().text().split(" ")[0],
-                            curr: $($($(this))).find('div').eq(-1).children().eq(-2).text().split(" ")[0],
-                            discount: $($($(this))).find('div').eq(-1).children().last().html()
+        // Get the height of the rendered page
+        let bodyHandle = await page.$('body');
+        let { height } = await bodyHandle.boundingBox();
+        await bodyHandle.dispose();
+
+        // Scroll one viewport at a time, pausing to let content load
+        const viewportHeight = 500
+        let viewportIncr = 0;
+
+        while (true) {
+            while (viewportIncr + viewportHeight < 27500) {
+                await page.evaluate(_viewportHeight => {
+                    window.scrollBy(0, 300);
+                }, viewportHeight);
+                await wait(50);
+                viewportIncr = viewportIncr + viewportHeight;
+            }
+            let content = await page.content();
+            var $ = cheerio.load(content);
+            console.log($('article').html())
+            var data = []
+            $('article').each(function (i, elem) {
+                data[i] =
+                    [
+                        { name: $($($(this))).find('h3').children().children().text() },
+                        { brand: "Nordstrom" },
+                        { brandLogo: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1f/Nordstrom_Logo.svg/1280px-Nordstrom_Logo.svg.png" },
+                        { src: $(this).find('div').find('img').attr('src') },
+                        { link: 'https://shop.nordstrom.com' + $(this).find('a').attr('href') },
+                        {
+                            price: {
+                                prev: $($($(this))).find('div').eq(-2).children().last().text().split(" ")[0],
+                                curr: $($($(this))).find('div').eq(-1).children().eq(-2).text().split(" ")[0],
+                                discount: $($($(this))).find('div').eq(-1).children().last().html()
+                            }
                         }
-                    }
-                ]
-        })
-        res.send(data)
-        await wait(1000)
-
-        browser.close();
-
+                    ]
+            })
+            //res.send(data)
+            await page.click('.nui-icon-large-chevron-right');
+            await wait(3000);
+            viewportIncr = 0
+            bodyHandle = await page.$('body');
+        }
     };
 
     scrape()
-
-    // request('https://shop.nordstrom.com/c/all-womens-sale', function (error, response, body) {
-    //     const $ = cheerio.load(body);
-
-    //     $('article').each(function (i, elem) {
-    //         db.scrapedData.insert({
-    //             name: $($($(this))).find('h3').children().children().text(),
-    //             brand: "Nordstrom",
-    //             brandLogo: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1f/Nordstrom_Logo.svg/1280px-Nordstrom_Logo.svg.png",
-    //             src: $(this).find('div').find('img').attr('src'),
-    //             link: 'https://shop.nordstrom.com' + $(this).find('a').attr('href'),
-    //             price: {
-    //                 prev: $($($(this))).find('div').eq(-2).children().last().text().split(" ")[0],
-    //                 curr: $($($(this))).find('div').eq(-1).children().eq(-2).text().split(" ")[0],
-    //                 discount: $($($(this))).find('div').eq(-1).children().last().html()
-    //             }
-    //         }, function (error, newItem) {
-    //             if (error) {
-    //                 console.log(error)
-    //             } else {
-    //                 console.log(`Added item ${i}`);
-    //             }
-    //         })
-    //     })
-    // })
 })
 
 app.get("/scrape-madeWell", function (req, res) {
