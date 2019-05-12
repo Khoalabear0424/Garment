@@ -9,6 +9,7 @@ class ArticleDisplay extends Component {
 
     async componentDidMount() {
         const { data: clothes } = await getClothes();
+        console.log(clothes)
         this.setState({ clothes })
     }
 

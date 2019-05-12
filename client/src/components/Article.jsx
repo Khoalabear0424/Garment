@@ -9,7 +9,7 @@ class Article extends Component {
         const { name, imgSrc, link, prev, curr, discount, brandLogo } = this.props
 
         return (
-            <figure className="figure article m-4">
+            <figure className="figure article m-3">
                 <img src={imgSrc} className="figure-img img-fluid rounded" alt="" />
                 <figcaption className="figure-caption">
                     <h6>

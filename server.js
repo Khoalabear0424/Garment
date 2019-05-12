@@ -86,7 +86,7 @@ app.get("/scrape-nordStrom", function (req, res) {
             db.scrapedData.insert({
                 name: $($($(this))).find('h3').children().children().text(),
                 brand: "Nordstrom",
-                brandLogo: "https://brickworks-media-production.s3.amazonaws.com/logo/6/madewell-logo.png",
+                brandLogo: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1f/Nordstrom_Logo.svg/1280px-Nordstrom_Logo.svg.png",
                 src: $(this).find('div').find('img').attr('src'),
                 link: 'https://shop.nordstrom.com' + $(this).find('a').attr('href'),
                 price: {
@@ -133,7 +133,7 @@ app.get("/scrape-madeWell", function (req, res) {
             await page.evaluate(_viewportHeight => {
                 window.scrollBy(0, _viewportHeight);
             }, viewportHeight);
-            await wait(2000);
+            await wait(100);
             viewportIncr = viewportIncr + viewportHeight;
         }
 
@@ -168,7 +168,7 @@ app.get("/scrape-madeWell", function (req, res) {
                     },
                     name: productName[i].innerText.trim(),
                     brand: "Madewell",
-                    brandLogo: "https://cblproperty.blob.core.windows.net/production/assets/blt9984adfdc47a0340-Madewell_logo.png",
+                    brandLogo: "https://brickworks-media-production.s3.amazonaws.com/logo/6/madewell-logo.png",
                     src: imgLink[i].getAttribute('src'),
                     link: productName[i].children[0].getAttribute('href'),
                     price: {
