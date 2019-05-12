@@ -83,36 +83,47 @@ app.get("/scrape-nordStrom", function (req, res) {
         function wait(ms) {
             return new Promise(resolve => setTimeout(() => resolve(), ms));
         }
+
         const browser = await puppeteer.launch({ headless: false });
         const page = await browser.newPage();
         await page.goto('https://shop.nordstrom.com/c/all-womens-sale');
         await page.waitForSelector('.nui-icon');
 
-        var clothes = await page.evaluate(() => {
+        const bodyHandle = await page.$('body');
+        const html = await page.evaluate(body => body.innerHTML, bodyHandle);
+        await bodyHandle.dispose();
+
+        await page.evaluate(body => {
             var clothesArray = []
+            $ = cheerio.load(body);
+            res.send($('article'));
 
-            var product = document.querySelectorAll('article');
-            var imgLink = document.querySelectorAll('img');
-            var productName = document.querySelectorAll('article > h3 > a > span > span');
-            var nameLink = document.querySelectorAll('article > div > a');
+            // var product = document.querySelectorAll('article');
+            // var imgLink = document.querySelectorAll('img');
+            // var productName = document.querySelectorAll('article > h3 > a > span > span');
+            // var nameLink = document.querySelectorAll('article > div > a');
+            // var price = document.querySelector('article > h3')
 
-            for (let i = 0; i < product.length; i++) {
-                clothesArray[i] = {
-                    name: productName[i].innerText,
-                    src: imgLink[i].getAttribute('src'),
-                    link: nameLink[i].getAttribute('href')
-                }
-            }
-            return clothesArray
+            // for (let i = 0; i < price.length; i++) {
+            //     // var productLength = product[i].childElementCount == 4 ? 5 : product[i].childElementCount;
+            //     clothesArray[i] = {
+            //         name: productName[i].innerText,
+            //         src: imgLink[i].getAttribute('src'),
+            //         link: nameLink[i].getAttribute('href'),
+            //         prev: price[0].nextSibling.innerText
+            //     }
+            // }
+
+            // return clothesArray
         })
         await wait(2000);
         await browser.close();
-        return clothes
+        // return clothes
     };
 
     scrape().then((value) => {
         for (let i in value) {
-            console.log(value[i].link)
+            console.log(value[i].prev)
         }
         res.json(value)
     });
