@@ -79,30 +79,65 @@ app.get("/shopping", (req, res) => {
 //----------------WEB SCRAPE--------------//
 
 app.get("/scrape-nordStrom", function (req, res) {
-    request('https://shop.nordstrom.com/c/all-womens-sale', function (error, response, body) {
-        const $ = cheerio.load(body);
+    let scrape = async () => {
+        function wait(ms) {
+            return new Promise(resolve => setTimeout(() => resolve(), ms));
+        }
+        const browser = await puppeteer.launch({ headless: false });
+        const page = await browser.newPage();
+        await page.goto('https://shop.nordstrom.com/c/all-womens-sale');
+        await page.waitForSelector('.nui-icon');
 
-        $('article').each(function (i, elem) {
-            db.scrapedData.insert({
-                name: $($($(this))).find('h3').children().children().text(),
-                brand: "Nordstrom",
-                brandLogo: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1f/Nordstrom_Logo.svg/1280px-Nordstrom_Logo.svg.png",
-                src: $(this).find('div').find('img').attr('src'),
-                link: 'https://shop.nordstrom.com' + $(this).find('a').attr('href'),
-                price: {
-                    prev: $($($(this))).find('div').eq(-2).children().last().text().split(" ")[0],
-                    curr: $($($(this))).find('div').eq(-1).children().eq(-2).text().split(" ")[0],
-                    discount: $($($(this))).find('div').eq(-1).children().last().html()
+        var clothes = await page.evaluate(() => {
+            var clothesArray = []
+
+            var product = document.querySelectorAll('article');
+            var imgLink = document.querySelectorAll('img');
+            var productName = document.querySelectorAll('article > h3 > a > span > span');
+
+            for (let i = 0; i < product.length; i++) {
+                clothesArray[i] = {
+                    name: productName[i].innerText,
+                    src: imgLink[i].getAttribute('src')
                 }
-            }, function (error, newItem) {
-                if (error) {
-                    console.log(error)
-                } else {
-                    console.log(`Added item ${i}`);
-                }
-            })
+            }
+            return clothesArray
         })
-    })
+        await wait(2000);
+        await browser.close();
+        return clothes
+    };
+
+    scrape().then((value) => {
+        for (let i in value) {
+            console.log(value[i].name)
+        }
+        res.json(value)
+    });
+    // request('https://shop.nordstrom.com/c/all-womens-sale', function (error, response, body) {
+    //     const $ = cheerio.load(body);
+
+    //     $('article').each(function (i, elem) {
+    //         db.scrapedData.insert({
+    //             name: $($($(this))).find('h3').children().children().text(),
+    //             brand: "Nordstrom",
+    //             brandLogo: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1f/Nordstrom_Logo.svg/1280px-Nordstrom_Logo.svg.png",
+    //             src: $(this).find('div').find('img').attr('src'),
+    //             link: 'https://shop.nordstrom.com' + $(this).find('a').attr('href'),
+    //             price: {
+    //                 prev: $($($(this))).find('div').eq(-2).children().last().text().split(" ")[0],
+    //                 curr: $($($(this))).find('div').eq(-1).children().eq(-2).text().split(" ")[0],
+    //                 discount: $($($(this))).find('div').eq(-1).children().last().html()
+    //             }
+    //         }, function (error, newItem) {
+    //             if (error) {
+    //                 console.log(error)
+    //             } else {
+    //                 console.log(`Added item ${i}`);
+    //             }
+    //         })
+    //     })
+    // })
 })
 
 app.get("/scrape-madeWell", function (req, res) {
@@ -120,7 +155,7 @@ app.get("/scrape-madeWell", function (req, res) {
         // Get the height of the rendered page
         const bodyHandle = await page.$('body');
         let { height } = await bodyHandle.boundingBox();
-        let totalHeight = height * 5;
+        let totalHeight = height * 10;
         await bodyHandle.dispose();
 
         // Scroll one viewport at a time, pausing to let content load
@@ -131,17 +166,17 @@ app.get("/scrape-madeWell", function (req, res) {
         while (height < totalHeight) {
             while (viewportIncr + viewportHeight < (height - 1000)) {
                 await page.evaluate(_viewportHeight => {
-                    window.scrollBy(0, 500);
+                    window.scrollBy(0, 300);
                 }, viewportHeight);
-                await wait(500);
+                await wait(100);
                 viewportIncr = viewportIncr + viewportHeight;
             }
             if (loadMoreFlag) {
                 await page.click('.loadMoreButton');
                 loadMoreFlag = false;
             }
-            await wait(1800);
-            height += 5000;
+            await wait(3000);
+            height += 3000;
         }
 
         await wait(500);
@@ -181,43 +216,30 @@ app.get("/scrape-madeWell", function (req, res) {
     };
 
     scrape().then((value) => {
-        for (var i in value) {
-            db.scrapedData.insert({
-                name: value[i].name,
-                brand: value[i].brand,
-                brandLogo: value[i].brandLogo,
-                src: value[i].src,
-                link: value[i].link,
-                price: {
-                    prev: value[i].price.prev,
-                    curr: value[i].price.curr,
-                    discount: value[i].price.discount
-                }
-            }, function (error, newItem) {
-                if (error) {
-                    console.log(error)
-                } else {
-                    console.log(`Added item ${i}`);
-                }
-            })
+        for (let i in value) {
+            if (value[i].src) {
+                db.scrapedData.insert({
+                    name: value[i].name,
+                    brand: value[i].brand,
+                    brandLogo: value[i].brandLogo,
+                    src: value[i].src,
+                    link: value[i].link,
+                    price: {
+                        prev: value[i].price.prev,
+                        curr: value[i].price.curr,
+                        discount: value[i].price.discount
+                    }
+                }, function (error, newItem) {
+                    if (error) {
+                        console.log(error)
+                    } else {
+                        console.log(`Added item ${value[i].name}`);
+                    }
+                })
+            }
         }
         res.send(value)
     })
-
-
-    // puppeteer.launch({ headless: false }).then(async browser => {
-    //     const page = await browser.newPage();
-    //     page
-    //         .waitForSelector('img')
-    //         .then(() => {
-    //             console.log('Success')
-    //             var productName = document.querySelectorAll('.product-tile-details');
-    //             console.log(productName)
-    //         });
-    //     await page.goto("https://www.madewell.com/womens/sale");
-
-    //     await browser.close();
-    // });
 })
 
 
