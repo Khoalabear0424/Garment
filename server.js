@@ -94,11 +94,13 @@ app.get("/scrape-nordStrom", function (req, res) {
             var product = document.querySelectorAll('article');
             var imgLink = document.querySelectorAll('img');
             var productName = document.querySelectorAll('article > h3 > a > span > span');
+            var nameLink = document.querySelectorAll('article > div > a');
 
             for (let i = 0; i < product.length; i++) {
                 clothesArray[i] = {
                     name: productName[i].innerText,
-                    src: imgLink[i].getAttribute('src')
+                    src: imgLink[i].getAttribute('src'),
+                    link: nameLink[i].getAttribute('href')
                 }
             }
             return clothesArray
@@ -110,7 +112,7 @@ app.get("/scrape-nordStrom", function (req, res) {
 
     scrape().then((value) => {
         for (let i in value) {
-            console.log(value[i].name)
+            console.log(value[i].link)
         }
         res.json(value)
     });
