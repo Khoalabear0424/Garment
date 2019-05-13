@@ -98,12 +98,12 @@ app.get("/scrape-nordStrom", function (req, res) {
         let viewportIncr = 0;
         let pages = 0;
 
-        while (pages < 2) {
+        while (pages < 10) {
             while (viewportIncr + viewportHeight < 27500) {
                 await page.evaluate(_viewportHeight => {
                     window.scrollBy(0, 300);
                 }, viewportHeight);
-                await wait(50);
+                await wait(10);
                 viewportIncr = viewportIncr + viewportHeight;
             }
             let content = await page.content();
