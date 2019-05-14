@@ -98,7 +98,7 @@ app.get("/scrape-nordStrom", function (req, res) {
         let viewportIncr = 0;
         let pages = 0;
 
-        while (pages < 3) {
+        while (pages < 10) {
             while (viewportIncr + viewportHeight < 27500) {
                 await page.evaluate(_viewportHeight => {
                     window.scrollBy(0, 300);
@@ -125,14 +125,14 @@ app.get("/scrape-nordStrom", function (req, res) {
 
                     }
             })
-            await page.click('.nui-icon-large-chevron-right');
+            insertDataIntoDB(data)
             await wait(3000);
+            await page.click('.nui-icon-large-chevron-right');
             viewportIncr = 0
             bodyHandle = await page.$('body');
             pages++
         }
         res.send(data)
-        insertDataIntoDB(data)
         await browser.close();
     };
 
@@ -176,7 +176,7 @@ app.get("/scrape-madeWell", function (req, res) {
         // Get the height of the rendered page
         const bodyHandle = await page.$('body');
         let { height } = await bodyHandle.boundingBox();
-        let totalHeight = height * 2;
+        let totalHeight = height * 10;
         await bodyHandle.dispose();
 
         // Scroll one viewport at a time, pausing to let content load
