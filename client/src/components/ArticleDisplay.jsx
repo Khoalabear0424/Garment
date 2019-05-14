@@ -19,7 +19,6 @@ class ArticleDisplay extends Component {
     render() {
         return (
             <div>
-                {console.log(this.state.clothes)}
                 {this.state.clothes.map(a =>
                     <Article
                         key={a._id}

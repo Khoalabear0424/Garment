@@ -98,12 +98,12 @@ app.get("/scrape-nordStrom", function (req, res) {
         let viewportIncr = 0;
         let pages = 0;
 
-        while (pages < 10) {
+        while (pages < 3) {
             while (viewportIncr + viewportHeight < 27500) {
                 await page.evaluate(_viewportHeight => {
                     window.scrollBy(0, 300);
                 }, viewportHeight);
-                await wait(10);
+                await wait(50);
                 viewportIncr = viewportIncr + viewportHeight;
             }
             let content = await page.content();
@@ -169,7 +169,6 @@ app.get("/scrape-madeWell", function (req, res) {
         }
         var browser = await puppeteer.launch({ headless: false });
         var page = await browser.newPage();
-
         await page.goto('https://www.madewell.com/womens/sale');
         await page.waitForSelector('.ui-widget-overlay');
         await page.click('.ui-button');
@@ -177,7 +176,7 @@ app.get("/scrape-madeWell", function (req, res) {
         // Get the height of the rendered page
         const bodyHandle = await page.$('body');
         let { height } = await bodyHandle.boundingBox();
-        let totalHeight = height * 10;
+        let totalHeight = height * 2;
         await bodyHandle.dispose();
 
         // Scroll one viewport at a time, pausing to let content load
@@ -190,18 +189,18 @@ app.get("/scrape-madeWell", function (req, res) {
                 await page.evaluate(_viewportHeight => {
                     window.scrollBy(0, 300);
                 }, viewportHeight);
-                await wait(100);
+                await wait(500);
                 viewportIncr = viewportIncr + viewportHeight;
             }
             if (loadMoreFlag) {
                 await page.click('.loadMoreButton');
                 loadMoreFlag = false;
             }
-            await wait(3000);
+            await wait(2000);
             height += 3000;
         }
 
-        await wait(500);
+        await wait(4000);
 
         var clothes = await page.evaluate(() => {
             var clothesArray = []
@@ -269,7 +268,7 @@ app.get("/scrape-madeWell", function (req, res) {
 //----------------API----------------//
 
 app.get("/word-type", function (req, res) {
-    db.nameTracker.find().sort({ 'count': -1 }).limit(20, function (error, found) {
+    db.nameTracker.find({ 'word': { $nin: ["in", "Top", "The", "(Women)", "Stripe", "Edition", "&", "Madewell", "Wash:", "Mini", "x", "Whisper", "Tall", "Texture", "Tie-Front"] } }).sort({ 'count': -1 }).limit(30, function (error, found) {
         if (error) {
             console.log(error);
         }
@@ -286,30 +285,30 @@ app.get("/all-data", function (req, res) {
             console.log(error);
         }
         else {
-            var hash = {}
-            var name = [];
-            for (let i = 0; i < 284; i++) {
-                name.push(found[i].name.split(" "))
-            }
-            for (let i in name) {
-                for (let j in name[i]) {
-                    hash[name[i][j]] = (hash[name[i][j]] || 0) + 1;
-                }
-            }
+            // var hash = {}
+            // var name = [];
+            // for (let i = 0; i < 284; i++) {
+            //     name.push(found[i].name.split(" "))
+            // }
+            // for (let i in name) {
+            //     for (let j in name[i]) {
+            //         hash[name[i][j]] = (hash[name[i][j]] || 0) + 1;
+            //     }
+            // }
 
-            for (let i in hash) {
-                db.nameTracker.insert({
-                    word: i,
-                    count: hash[i]
-                }, function (error, newItem) {
-                    if (error) {
-                        console.log(error)
-                    } else {
-                        console.log(`Added item ${Object.keys(hash)[i]}`);
-                    }
-                })
-            }
-            res.json(hash)
+            // for (let i in hash) {
+            //     db.nameTracker.insert({
+            //         word: i,
+            //         count: hash[i]
+            //     }, function (error, newItem) {
+            //         if (error) {
+            //             console.log(error)
+            //         } else {
+            //             console.log(`Added item ${Object.keys(hash)[i]}`);
+            //         }
+            //     })
+            // }
+            res.json(found)
         }
     });
 });
