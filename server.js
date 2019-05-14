@@ -288,7 +288,7 @@ app.get("/all-data", function (req, res) {
         else {
             var hash = {}
             var name = [];
-            for (let i = 0; i < 200; i++) {
+            for (let i = 0; i < 284; i++) {
                 name.push(found[i].name.split(" "))
             }
             for (let i in name) {
