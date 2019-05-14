@@ -268,7 +268,19 @@ app.get("/scrape-madeWell", function (req, res) {
 
 //----------------API----------------//
 
+app.get("/word-type", function (req, res) {
+    db.nameTracker.find().sort({ 'count': -1 }).limit(20, function (error, found) {
+        if (error) {
+            console.log(error);
+        }
+        else {
+            res.json(found)
+        }
+    });
+})
+
 app.get("/all-data", function (req, res) {
+    db.nameTracker.drop()
     db.scrapedData.find({}, function (error, found) {
         if (error) {
             console.log(error);
@@ -276,7 +288,7 @@ app.get("/all-data", function (req, res) {
         else {
             var hash = {}
             var name = [];
-            for (let i = 0; i < 100; i++) {
+            for (let i = 0; i < 200; i++) {
                 name.push(found[i].name.split(" "))
             }
             for (let i in name) {
@@ -284,10 +296,24 @@ app.get("/all-data", function (req, res) {
                     hash[name[i][j]] = (hash[name[i][j]] || 0) + 1;
                 }
             }
-            res.json(hash);
+
+            for (let i in hash) {
+                db.nameTracker.insert({
+                    word: i,
+                    count: hash[i]
+                }, function (error, newItem) {
+                    if (error) {
+                        console.log(error)
+                    } else {
+                        console.log(`Added item ${Object.keys(hash)[i]}`);
+                    }
+                })
+            }
+            res.json(hash)
         }
     });
 });
+
 
 // app.post('/save-item', (req, res) => {
 //     console.log(req.body.item_id)
