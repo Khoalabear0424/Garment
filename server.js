@@ -274,7 +274,17 @@ app.get("/all-data", function (req, res) {
             console.log(error);
         }
         else {
-            res.json(found);
+            var hash = {}
+            var name = [];
+            for (let i = 0; i < 100; i++) {
+                name.push(found[i].name.split(" "))
+            }
+            for (let i in name) {
+                for (let j in name[i]) {
+                    hash[name[i][j]] = (hash[name[i][j]] || 0) + 1;
+                }
+            }
+            res.json(hash);
         }
     });
 });
