@@ -88,7 +88,7 @@ router.get('/', function (req, res) {
     };
 
     scrape().then((value) => {
-        for (let i in value) {
+        for (var i in value) {
             if (value[i].src) {
                 db.scrapedData.insert({
                     name: value[i].name,
@@ -110,6 +110,7 @@ router.get('/', function (req, res) {
                 })
             }
         }
+
         res.send(value)
     })
 })

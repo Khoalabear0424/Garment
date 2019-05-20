@@ -72,7 +72,7 @@ router.get('/', function (req, res) {
     };
 
     function insertDataIntoDB(value) {
-        for (let i in value) {
+        for (var i in value) {
             db.scrapedData.insert({
                 name: value[i].name,
                 brand: value[i].brand,
