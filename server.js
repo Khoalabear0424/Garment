@@ -98,7 +98,7 @@ app.get("/scrape-nordStrom", function (req, res) {
         let viewportIncr = 0;
         let pages = 0;
 
-        while (pages < 10) {
+        while (pages < 2) {
             while (viewportIncr + viewportHeight < 27500) {
                 await page.evaluate(_viewportHeight => {
                     window.scrollBy(0, 300);
@@ -176,7 +176,7 @@ app.get("/scrape-madeWell", function (req, res) {
         // Get the height of the rendered page
         const bodyHandle = await page.$('body');
         let { height } = await bodyHandle.boundingBox();
-        let totalHeight = height * 10;
+        let totalHeight = height * 2;
         await bodyHandle.dispose();
 
         // Scroll one viewport at a time, pausing to let content load
@@ -279,35 +279,34 @@ app.get("/word-type", function (req, res) {
 })
 
 app.get("/all-data", function (req, res) {
-    db.nameTracker.drop()
     db.scrapedData.find({}, function (error, found) {
         if (error) {
             console.log(error);
         }
         else {
-            // var hash = {}
-            // var name = [];
-            // for (let i = 0; i < 284; i++) {
-            //     name.push(found[i].name.split(" "))
-            // }
-            // for (let i in name) {
-            //     for (let j in name[i]) {
-            //         hash[name[i][j]] = (hash[name[i][j]] || 0) + 1;
-            //     }
-            // }
+            var hash = {}
+            var name = [];
+            for (let i = 0; i < found.length; i++) {
+                name.push(found[i].name.split(" "))
+            }
+            for (let i in name) {
+                for (let j in name[i]) {
+                    hash[name[i][j]] = (hash[name[i][j]] || 0) + 1;
+                }
+            }
 
-            // for (let i in hash) {
-            //     db.nameTracker.insert({
-            //         word: i,
-            //         count: hash[i]
-            //     }, function (error, newItem) {
-            //         if (error) {
-            //             console.log(error)
-            //         } else {
-            //             console.log(`Added item ${Object.keys(hash)[i]}`);
-            //         }
-            //     })
-            // }
+            for (let i in hash) {
+                db.nameTracker.insert({
+                    word: i,
+                    count: hash[i]
+                }, function (error, newItem) {
+                    if (error) {
+                        console.log(error)
+                    } else {
+                        console.log(`Added item ${Object.keys(hash)[i]}`);
+                    }
+                })
+            }
             res.json(found)
         }
     });
