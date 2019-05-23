@@ -6,7 +6,8 @@ import Pagination from './common/pagination';
 class ArticleDisplay extends Component {
     state = {
         clothes: [],
-        pageSize: 10
+        pageSize: 10,
+        currentPage: 1
     }
 
     async componentDidMount() {
@@ -20,13 +21,13 @@ class ArticleDisplay extends Component {
     }
 
     handlePageChange = page => {
-        console.log(page)
+        this.setState({ currentPage: page })
     }
 
 
     render() {
         const { length: count } = this.state.clothes;
-        const { clothes, pageSize } = this.state;
+        const { clothes, pageSize, currentPage } = this.state;
         return (
             <div>
                 {clothes.map(a =>
@@ -47,6 +48,7 @@ class ArticleDisplay extends Component {
                         itemsCount={count}
                         pageSize={pageSize}
                         onPageChange={this.handlePageChange}
+                        currentPage={currentPage}
                     />
                 </div>
             </div>
