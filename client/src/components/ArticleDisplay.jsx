@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { getClothes } from '../services/scrapeClothesService';
 import Article from './Article';
+import Pagination from './common/pagination';
 
 class ArticleDisplay extends Component {
     state = {
@@ -32,6 +33,11 @@ class ArticleDisplay extends Component {
                         brand={a.brand}
                     />
                 )}
+                <Pagination
+                // itemsCount={count}
+                // pageSize={this.state.pageSize}
+                // onPageChange={this.handlePageChange}
+                />
             </div>
         );
     }
