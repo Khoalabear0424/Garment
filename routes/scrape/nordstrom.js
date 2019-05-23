@@ -34,7 +34,7 @@ router.get('/', function (req, res) {
         let viewportIncr = 0;
         let pages = 0;
 
-        while (pages < 1) {
+        while (pages < 4) {
             while (viewportIncr + viewportHeight < 27500) {
                 await page.evaluate(_viewportHeight => {
                     window.scrollBy(0, 300);

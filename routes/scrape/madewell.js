@@ -14,6 +14,8 @@ db.on("error", function (error) {
     console.log("Database Error:", error);
 });
 
+const pagesToScrape = 4;
+
 router.get('/', function (req, res) {
     let scrape = async () => {
         function wait(ms) {
@@ -28,7 +30,7 @@ router.get('/', function (req, res) {
         // Get the height of the rendered page
         const bodyHandle = await page.$('body');
         let { height } = await bodyHandle.boundingBox();
-        let totalHeight = height * 1;
+        let totalHeight = height * pagesToScrape;
         await bodyHandle.dispose();
 
         // Scroll one viewport at a time, pausing to let content load

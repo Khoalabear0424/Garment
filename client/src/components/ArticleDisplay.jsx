@@ -7,7 +7,7 @@ import { paginate } from '../utils/paginate';
 class ArticleDisplay extends Component {
     state = {
         clothes: [],
-        pageSize: 10,
+        pageSize: 60,
         currentPage: 1
     }
 
