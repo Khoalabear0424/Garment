@@ -19,6 +19,9 @@ class ArticleDisplay extends Component {
         console.log(this.state)
     }
 
+    handlePageChange = page => {
+        console.log(page)
+    }
 
 
     render() {
@@ -43,7 +46,7 @@ class ArticleDisplay extends Component {
                     <Pagination
                         itemsCount={count}
                         pageSize={pageSize}
-                    // onPageChange={this.handlePageChange}
+                        onPageChange={this.handlePageChange}
                     />
                 </div>
             </div>
