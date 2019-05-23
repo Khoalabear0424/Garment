@@ -11,12 +11,20 @@ db.on("error", function (error) {
 });
 
 router.get('/', function (req, res) {
-    db.nameTracker.find({ 'word': { $nin: ["in", "Top", "The", "(Women)", "Stripe", "Edition", "&", "Madewell", "Wash:", "Mini", "x", "Whisper", "Tall", "Texture", "Tie-Front"] } }).sort({ 'count': -1 }).limit(30, function (error, found) {
+    db.nameTracker.find({
+        'word': {
+            $nin: ["(Nordstrom", "Exclusive)", "Size)", "Burch", "Tory", "Midi", "Front", "Plus", "Leith", "Jeans", "Navy", "Something", "Gibson", "Slide", "Skinny", "Waist", "High", "BP.", "J", "Wash", "Lace", "Sam", "Flat", "Edelman", "Ruffle", "Sleeve", "Eliza", "Crossbody", "Neck", "Topshop", "Wrap", "Halogen®", "Shoulder", "Linen", "Small", "Caslon®", "Ankle", "Blend", "the", "Rebecca", "Maxi", "Wide-Leg", "Mule", "Espadrille", "Button", "Minkoff", "Print", "Vince", "Society", "Emmett", "Long", "Toe", "Zella", "Faux", "UGG®", "Strap", "Blouse", "Camuto", "Relaxed", "Eco", "Rigid", "Petite", "Ruched", "Convertible", "Off", "Pump", "Sugarplum!", "Hi", "Camisole", "Minidress", "(Plus", "Women's", "International", "Day", "MARC", "JACOBS", "Button-Front", "High-Rise", "Mid-Rise", "9\"", "Short", "A-Line", "Slim", "Embroidered", "Knit", "Tunic", "Nordstrom", "Mesh", "All", "Halter", "Shift", "Sheath", "Crepe", "Easy"]
+        }
+    }).sort({ 'count': -1 }).limit(120, function (error, found) {
         if (error) {
             console.log(error);
         }
         else {
-            res.json(found)
+            var wordArr = []
+            for (let i in found) {
+                wordArr.push(found[i].word)
+            }
+            res.json(wordArr)
         }
     });
 })
