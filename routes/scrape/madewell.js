@@ -3,7 +3,7 @@ const app = express();
 const router = express.Router();
 const puppeteer = require('puppeteer');
 const cheerio = require('cheerio');
-var mongojs = require("mongojs");
+const mongojs = require("mongojs");
 
 
 var databaseUrl = "garmet_DB";

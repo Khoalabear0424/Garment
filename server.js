@@ -29,61 +29,17 @@ db.on("error", function (error) {
 
 
 //----------------WEB SCRAPE--------------//
-
 app.use('/scrape-nordStrom', require('./routes/scrape/nordstrom'));
 app.use('/scrape-madeWell', require('./routes/scrape/madewell'));
 
 
-
 //----------------API----------------//
-
-app.get("/word-type", function (req, res) {
-    db.nameTracker.find({ 'word': { $nin: ["in", "Top", "The", "(Women)", "Stripe", "Edition", "&", "Madewell", "Wash:", "Mini", "x", "Whisper", "Tall", "Texture", "Tie-Front"] } }).sort({ 'count': -1 }).limit(30, function (error, found) {
-        if (error) {
-            console.log(error);
-        }
-        else {
-            res.json(found)
-        }
-    });
-})
-
-app.get("/all-data", function (req, res) {
-    db.scrapedData.find({}, function (error, found) {
-        if (error) {
-            console.log(error);
-        }
-        else {
-            // var hash = {}
-            // var name = [];
-            // for (let i = 0; i < found.length; i++) {
-            //     name.push(found[i].name.split(" "))
-            // }
-            // for (let i in name) {
-            //     for (let j in name[i]) {
-            //         hash[name[i][j]] = (hash[name[i][j]] || 0) + 1;
-            //     }
-            // }
-
-            // for (let i in hash) {
-            //     db.nameTracker.insert({
-            //         word: i,
-            //         count: hash[i]
-            //     }, function (error, newItem) {
-            //         if (error) {
-            //             console.log(error)
-            //         } else {
-            //             console.log(`Added item ${Object.keys(hash)[i]}`);
-            //         }
-            //     })
-            // }
-            res.json(found)
-        }
-    });
-});
+app.use('/sort-word-type', require('./routes/api/sortWordType'));
+app.use('/parse-word-type', require('./routes/api/parseNames'));
+app.use('/all-data', require('./routes/api/getAllData'));
 
 
-// Listen on port 3001
+//----------Listen on port 3001------------//
 app.listen(3001, function () {
     console.log("App running on port 3001!");
 });
