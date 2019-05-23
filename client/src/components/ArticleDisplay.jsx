@@ -5,7 +5,8 @@ import Pagination from './common/pagination';
 
 class ArticleDisplay extends Component {
     state = {
-        clothes: []
+        clothes: [],
+        pageSize: 10
     }
 
     async componentDidMount() {
@@ -17,10 +18,15 @@ class ArticleDisplay extends Component {
     checkMethod = () => {
         console.log(this.state)
     }
+
+
+
     render() {
+        const { length: count } = this.state.clothes;
+        const { clothes, pageSize } = this.state;
         return (
             <div>
-                {this.state.clothes.map(a =>
+                {clothes.map(a =>
                     <Article
                         key={a._id}
                         name={a.name}
@@ -33,11 +39,13 @@ class ArticleDisplay extends Component {
                         brand={a.brand}
                     />
                 )}
-                <Pagination
-                // itemsCount={count}
-                // pageSize={this.state.pageSize}
-                // onPageChange={this.handlePageChange}
-                />
+                <div className="container">
+                    <Pagination
+                        itemsCount={count}
+                        pageSize={pageSize}
+                    // onPageChange={this.handlePageChange}
+                    />
+                </div>
             </div>
         );
     }
