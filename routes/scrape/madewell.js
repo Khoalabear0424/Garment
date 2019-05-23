@@ -4,6 +4,7 @@ const router = express.Router();
 const puppeteer = require('puppeteer');
 const cheerio = require('cheerio');
 const mongojs = require("mongojs");
+const insertDataIntoDB = require('../../utils/lib/insertIntoDB');
 
 
 var databaseUrl = "garmet_DB";
@@ -27,7 +28,7 @@ router.get('/', function (req, res) {
         // Get the height of the rendered page
         const bodyHandle = await page.$('body');
         let { height } = await bodyHandle.boundingBox();
-        let totalHeight = height * 2;
+        let totalHeight = height * 1;
         await bodyHandle.dispose();
 
         // Scroll one viewport at a time, pausing to let content load
@@ -88,29 +89,7 @@ router.get('/', function (req, res) {
     };
 
     scrape().then((value) => {
-        for (var i in value) {
-            if (value[i].src) {
-                db.scrapedData.insert({
-                    name: value[i].name,
-                    brand: value[i].brand,
-                    brandLogo: value[i].brandLogo,
-                    src: value[i].src,
-                    link: value[i].link,
-                    price: {
-                        prev: value[i].price.prev,
-                        curr: value[i].price.curr,
-                        discount: value[i].price.discount
-                    }
-                }, function (error, newItem) {
-                    if (error) {
-                        console.log(error)
-                    } else {
-                        console.log(`Added item ${value[i].name}`);
-                    }
-                })
-            }
-        }
-
+        insertDataIntoDB(value);
         res.send(value)
     })
 })

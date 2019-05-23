@@ -7,6 +7,7 @@ app.use(express.static("public"));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
+
 //Init Middleware
 app.use(express.json({ extended: false }));
 

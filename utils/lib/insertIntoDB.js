@@ -1,5 +1,14 @@
-function insertDataIntoDB(value) {
-    for (var i in value) {
+var databaseUrl = "garmet_DB";
+var collections = ["scrapedData", "savedItems"];
+const mongojs = require("mongojs");
+var db = mongojs(databaseUrl, collections);
+
+db.on("error", function (error) {
+    console.log("Database Error:", error);
+});
+
+const insertDataIntoDB = (value) => {
+    for (let i in value) {
         db.scrapedData.insert({
             name: value[i].name,
             brand: value[i].brand,
@@ -20,4 +29,6 @@ function insertDataIntoDB(value) {
         })
     }
 }
+
+module.exports = insertDataIntoDB;
 
