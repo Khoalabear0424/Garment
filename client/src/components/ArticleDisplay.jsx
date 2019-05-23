@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { getClothes } from '../services/scrapeClothesService';
 import Article from './Article';
 import Pagination from './common/pagination';
+import { paginate } from '../utils/paginate';
 
 class ArticleDisplay extends Component {
     state = {
@@ -27,10 +28,13 @@ class ArticleDisplay extends Component {
 
     render() {
         const { length: count } = this.state.clothes;
-        const { clothes, pageSize, currentPage } = this.state;
+        const { clothes, pageSize, currentPage, clothes: currentClothes } = this.state;
+
+        const currClothesArray = paginate(currentClothes, currentPage, pageSize)
+
         return (
             <div>
-                {clothes.map(a =>
+                {currClothesArray.map(a =>
                     <Article
                         key={a._id}
                         name={a.name}
