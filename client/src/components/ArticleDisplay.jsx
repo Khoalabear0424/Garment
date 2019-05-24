@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { getClothes } from '../services/scrapeClothesService';
+import { getClothes, getClothesTypes } from '../services/scrapeClothesService';
 import Article from './Article';
 import Pagination from './common/pagination';
 import { paginate } from '../utils/paginate';
@@ -9,13 +9,16 @@ class ArticleDisplay extends Component {
     state = {
         clothes: [],
         pageSize: 60,
-        currentPage: 1
+        currentPage: 1,
+        clothesTypes: {}
     }
 
     async componentDidMount() {
         const { data: clothes } = await getClothes();
+        const { data: clothesTypes } = await getClothesTypes();
         console.log(clothes)
-        this.setState({ clothes })
+        console.log(clothesTypes)
+        this.setState({ clothes, clothesTypes })
     }
 
     checkMethod = () => {
