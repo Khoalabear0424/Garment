@@ -8,3 +8,7 @@ export function getClothes() {
 export function getClothesTypes() {
     return http.get(apiUrl + "/" + "sort-word-type")
 }
+
+export function getTops() {
+    return http.get(apiUrl + "/" + "filter-tops")
+}

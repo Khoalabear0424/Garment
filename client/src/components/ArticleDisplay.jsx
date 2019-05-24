@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { getClothes, getClothesTypes } from '../services/scrapeClothesService';
+import { getClothes, getClothesTypes, getTops } from '../services/scrapeClothesService';
 import Article from './Article';
 import Pagination from './common/pagination';
 import { paginate } from '../utils/paginate';
@@ -29,6 +29,10 @@ class ArticleDisplay extends Component {
         this.setState({ currentPage: page })
     }
 
+    handleTopsFilter = async () => {
+        const { data: clothes } = await getTops();
+        this.setState({ clothes })
+    }
 
     render() {
         const { length: count } = this.state.clothes;
@@ -40,7 +44,7 @@ class ArticleDisplay extends Component {
             <div className="row">
                 <div className="col-2">
                     <ListGroup
-
+                        onClickTops={this.handleTopsFilter}
                     />
                 </div>
                 <div className="col-10">
