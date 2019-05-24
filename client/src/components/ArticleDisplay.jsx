@@ -3,6 +3,7 @@ import { getClothes } from '../services/scrapeClothesService';
 import Article from './Article';
 import Pagination from './common/pagination';
 import { paginate } from '../utils/paginate';
+import ListGroup from '../components/ListGroup';
 
 class ArticleDisplay extends Component {
     state = {
@@ -33,27 +34,36 @@ class ArticleDisplay extends Component {
         const currClothesArray = paginate(currentClothes, currentPage, pageSize)
 
         return (
-            <div>
-                {currClothesArray.map(a =>
-                    <Article
-                        key={a._id}
-                        name={a.name}
-                        imgSrc={a.src}
-                        link={a.link}
-                        prev={a.price.prev}
-                        curr={a.price.curr}
-                        discount={a.price.discount}
-                        brandLogo={a.brandLogo}
-                        brand={a.brand}
+            <div className="row">
+                <div className="col-2">
+                    <ListGroup
+
                     />
-                )}
-                <div className="container">
-                    <Pagination
-                        itemsCount={count}
-                        pageSize={pageSize}
-                        onPageChange={this.handlePageChange}
-                        currentPage={currentPage}
-                    />
+                </div>
+                <div className="col-10">
+                    <div>
+                        {currClothesArray.map(a =>
+                            <Article
+                                key={a._id}
+                                name={a.name}
+                                imgSrc={a.src}
+                                link={a.link}
+                                prev={a.price.prev}
+                                curr={a.price.curr}
+                                discount={a.price.discount}
+                                brandLogo={a.brandLogo}
+                                brand={a.brand}
+                            />
+                        )}
+                        <div className="container">
+                            <Pagination
+                                itemsCount={count}
+                                pageSize={pageSize}
+                                onPageChange={this.handlePageChange}
+                                currentPage={currentPage}
+                            />
+                        </div>
+                    </div>
                 </div>
             </div>
         );
