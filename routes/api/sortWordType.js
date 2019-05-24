@@ -26,6 +26,7 @@ router.get('/', function (req, res) {
             }
             wordArr["Jeans"] = "Jeans";
             wordArr["MiniDress"] = "MiniDress";
+            wordArr["Flat"] = "Flat";
             // res.json(wordArr)
 
             db.scrapedData.find({}, function (error, found) {

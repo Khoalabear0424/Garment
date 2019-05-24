@@ -14,6 +14,8 @@ db.on("error", function (error) {
     console.log("Database Error:", error);
 });
 
+var pagesToScrape = 8;
+
 router.get('/', function (req, res) {
     async function scrape() {
         function wait(ms) {
@@ -34,7 +36,7 @@ router.get('/', function (req, res) {
         let viewportIncr = 0;
         let pages = 0;
 
-        while (pages < 4) {
+        while (pages < pagesToScrape) {
             while (viewportIncr + viewportHeight < 27500) {
                 await page.evaluate(_viewportHeight => {
                     window.scrollBy(0, 300);

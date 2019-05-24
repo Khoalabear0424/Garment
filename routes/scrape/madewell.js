@@ -14,7 +14,7 @@ db.on("error", function (error) {
     console.log("Database Error:", error);
 });
 
-const pagesToScrape = 4;
+const pagesToScrape = 8;
 
 router.get('/', function (req, res) {
     let scrape = async () => {
