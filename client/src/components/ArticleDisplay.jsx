@@ -10,15 +10,14 @@ class ArticleDisplay extends Component {
         clothes: [],
         pageSize: 60,
         currentPage: 1,
-        clothesTypes: {}
+        clothesTypes: ['Tops', 'Dresses', 'Pants', 'Shorts', 'Shoes']
     }
 
     async componentDidMount() {
         const { data: clothes } = await getClothes();
-        const { data: clothesTypes } = await getClothesTypes();
-        console.log(clothes)
-        console.log(clothesTypes)
-        this.setState({ clothes, clothesTypes })
+        // const { data: clothesTypes } = await getClothesTypes();
+        // console.log(clothesTypes)
+        this.setState({ clothes })
     }
 
     checkMethod = () => {
@@ -39,7 +38,7 @@ class ArticleDisplay extends Component {
 
     render() {
         const { length: count } = this.state.clothes;
-        const { clothes, pageSize, currentPage, clothes: currentClothes } = this.state;
+        const { pageSize, currentPage, clothes: currentClothes, clothesTypes } = this.state;
 
         const currClothesArray = paginate(currentClothes, currentPage, pageSize)
 
@@ -48,6 +47,7 @@ class ArticleDisplay extends Component {
                 <div className="col-2">
                     <ListGroup
                         onClickFilter={this.handleFilter}
+                        clothesTypesArray={clothesTypes}
                     />
                 </div>
                 <div className="col-10">
