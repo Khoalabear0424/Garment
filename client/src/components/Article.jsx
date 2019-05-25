@@ -19,7 +19,7 @@ class Article extends Component {
                     <span className="originalPrice">{prev}</span>
                     <span className="price"> {curr} </span>
                     <span className="percentOff"> {discount} </span>
-                    <img className="figure-img img-fluid rounded brand" src={brandLogo} />
+                    <img className="figure-img img-fluid rounded brand" src={brandLogo} alt="brandLogo" />
                 </figcaption>
             </figure>
         )

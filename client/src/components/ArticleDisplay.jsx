@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { getClothes, getClothesTypes, getType } from '../services/scrapeClothesService';
+import { getClothes, getType } from '../services/scrapeClothesService';
 import Article from './Article';
 import Pagination from './common/pagination';
 import { paginate } from '../utils/paginate';
@@ -15,8 +15,6 @@ class ArticleDisplay extends Component {
 
     async componentDidMount() {
         const { data: clothes } = await getClothes();
-        // const { data: clothesTypes } = await getClothesTypes();
-        // console.log(clothesTypes)
         this.setState({ clothes })
     }
 
