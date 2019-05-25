@@ -12,8 +12,15 @@ db.on("error", function (error) {
 
 router.get('/:type', function (req, res) {
     const type = req.params.type
+    const clothesTypeLookUp = {
+        'Tops': 'Top',
+        'Dresses': 'Dress',
+        'Pants': 'Pants',
+        'Shorts': 'Shorts',
+        'Shoes': 'Flat'
+    }
     db.scrapedData.find({
-        'type': type
+        'type': clothesTypeLookUp[type]
     }, function (error, found) {
         if (error) {
             console.log(error);
