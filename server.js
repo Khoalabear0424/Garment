@@ -38,7 +38,7 @@ app.use('/scrape-madeWell', require('./routes/scrape/madewell'));
 app.use('/sort-word-type', require('./routes/api/sortWordType'));
 app.use('/parse-word-type', require('./routes/api/parseNames'));
 app.use('/all-data', require('./routes/api/getAllData'));
-app.use('/filter-tops', require('./routes/api/filters'));
+app.use('/filter', require('./routes/api/filters'));
 
 
 //----------Listen on port 3001------------//

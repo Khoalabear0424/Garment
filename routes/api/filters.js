@@ -10,9 +10,10 @@ db.on("error", function (error) {
     console.log("Database Error:", error);
 });
 
-router.get('/', function (req, res) {
+router.get('/:type', function (req, res) {
+    const type = req.params.type
     db.scrapedData.find({
-        'type': 'Top'
+        'type': type
     }, function (error, found) {
         if (error) {
             console.log(error);

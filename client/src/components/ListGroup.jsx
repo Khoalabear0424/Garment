@@ -1,10 +1,10 @@
 import React from 'react';
 
 const ListGroup = (props) => {
-    const { onClickTops, items, textProperty, valueProperty, onItemSelect, selectedItem } = props;
+    const { onClickFilter, items, textProperty, valueProperty, onItemSelect, selectedItem } = props;
 
     return <ul className="list-group">
-        <li className="list-group-item" onClick={onClickTops}>Tops</li>
+        <li className="list-group-item" onClick={() => onClickFilter('Top')}>Tops</li>
         <li className="list-group-item">Dresses</li>
         <li className="list-group-item">Jeans</li>
         <li className="list-group-item">Skirts</li>

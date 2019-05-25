@@ -9,6 +9,17 @@ export function getClothesTypes() {
     return http.get(apiUrl + "/" + "sort-word-type")
 }
 
-export function getTops() {
-    return http.get(apiUrl + "/" + "filter-tops")
+export function getType(type) {
+    return fetch(`${apiUrl}/filter/${type}`, {
+        method: 'GET'
+    }).then(function (response) {
+        if (response.ok) {
+            console.log('success')
+            console.log(response)
+            return response.json();
+        } else {
+            console.log('fail')
+            return false
+        }
+    })
 }
