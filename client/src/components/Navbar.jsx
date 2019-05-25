@@ -14,13 +14,12 @@ class Navbar extends Component {
                     <a className="navbar-brand" href={tempLink}>Garment</a>
                     <ul className="navbar-nav mr-auto mt-2 mt-lg-0">
                         <li className="nav-item active">
-                            <a className="nav-link" href={tempLink}>Home <span className="sr-only">(current)</span></a>
+                            {/* <a className="nav-link" href={tempLink}>Home <span className="sr-only">(current)</span></a> */}
+                            <button className="btn">NordStrom</button>
+
                         </li>
                         <li className="nav-item">
                             <a className="nav-link" href={tempLink}>Link</a>
-                        </li>
-                        <li className="nav-item">
-                            <a className="nav-link disabled" href={tempLink}>Disabled</a>
                         </li>
                     </ul>
                     <form className="form-inline my-2 my-lg-0">

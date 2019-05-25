@@ -10,7 +10,7 @@ class ArticleDisplay extends Component {
         clothes: [],
         pageSize: 60,
         currentPage: 1,
-        clothesTypes: ['Tops', 'Dresses', 'Pants', 'Shorts', 'Shoes']
+        clothesTypes: ['All', 'Tops', 'Dresses', 'Jackets', 'Pants', 'Shorts', 'Shoes']
     }
 
     async componentDidMount() {
@@ -27,11 +27,16 @@ class ArticleDisplay extends Component {
     }
 
     handleFilter = async (type) => {
-        var { clothes } = this.state;
-        getType(type).then((r) => {
-            clothes = r;
+        if (type === 'All') {
+            const { data: clothes } = await getClothes();
             this.setState({ clothes })
-        })
+        } else {
+            var { clothes } = this.state;
+            getType(type).then((r) => {
+                clothes = r;
+                this.setState({ clothes })
+            })
+        }
     }
 
     render() {

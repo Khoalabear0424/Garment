@@ -28,27 +28,6 @@ router.get('/', function (req, res) {
             wordArr["MiniDress"] = "MiniDress";
             wordArr["Flat"] = "Flat";
             res.json(wordArr)
-
-            // db.scrapedData.find({}, function (error, found) {
-            //     if (error) {
-            //         console.log(error);
-            //     }
-            //     else {
-            //         for (let i in found) {
-            //             var itemName = found[i].name.split(" ");
-            //             console.log(`itemName : ${itemName}`)
-            //             for (let j in itemName) {
-            //                 if (wordArr[itemName[j]]) {
-            //                     console.log(`match: ${itemName[j]}`)
-            //                     db.scrapedData.update({ '_id': found[i]._id },
-            //                         { '$set': { 'type': itemName[j] } })
-            //                     break;
-            //                 }
-            //             }
-            //         }
-            //         res.json(found)
-            //     }
-            // });
         }
     });
 })

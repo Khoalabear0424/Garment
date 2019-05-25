@@ -13,14 +13,15 @@ db.on("error", function (error) {
 router.get('/:type', function (req, res) {
     const type = req.params.type
     const clothesTypeLookUp = {
-        'Tops': 'Top',
-        'Dresses': 'Dress',
-        'Pants': 'Pants',
-        'Shorts': 'Shorts',
-        'Shoes': 'Flat'
+        'Tops': ['Top', 'V-Neck', 'Shirt'],
+        'Dresses': ['Dress', 'Floral', 'Skirt', 'MiniDress', 'Sundress'],
+        'Jackets': ['Jacket', 'Coat', 'Cardigan'],
+        'Pants': ['Pants', 'Jeans'],
+        'Shorts': ['Shorts'],
+        'Shoes': ['Flat', 'Slip-On', 'Vans']
     }
     db.scrapedData.find({
-        'type': clothesTypeLookUp[type]
+        'type': { $in: clothesTypeLookUp[type] }
     }, function (error, found) {
         if (error) {
             console.log(error);

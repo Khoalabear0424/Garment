@@ -3,7 +3,7 @@ import React from 'react';
 const ListGroup = (props) => {
     const { onClickFilter, clothesTypesArray, selectedItem } = props;
 
-    return <ul className="list-group">
+    return <ul className="list-group m-4">
         {clothesTypesArray.map((item, index) =>
             <li
                 onClick={() => onClickFilter(item)}
