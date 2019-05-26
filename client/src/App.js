@@ -53,14 +53,14 @@ class App extends Component {
     return <div className="App">
       <header><Navbar /></header>
       <div className="row">
-        <div className="col-2">
+        <div className="col-lg-2 col-md-2 col-sm-2">
           <ListGroup
             selectedItem={currentFilter}
             onClickFilter={this.handleFilter}
             clothesTypesArray={clothesTypes}
           />
         </div>
-        <div className="col-10">
+        <div className="col-lg-10 col-md-10 col-sm-10 justify-content-center">
           <ArticleDisplay
             currClothesArray={currClothesArray}
           />
