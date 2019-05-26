@@ -9,6 +9,12 @@
 
 .btn-brand-nav{
   width: 120px;
+  display: inline-block;
+}
+
+.navbar-nav{
+  flex-direction: row !important;
+  float: right;
 }
 
 .brand-logo{
@@ -16,8 +22,17 @@
 }
 
 .list-group{
+  margin: 70px 0px 0px 40px;
   top: 50px !important;
-  width: 200px;
+  width: 80%;
+}
+
+.list-group-item{
+  min-width: 100px;
+}
+
+.nav-row{
+  width: 100%;
 }
 
 /*------------------- Article -----------------------*/
@@ -26,7 +41,7 @@ h1{
 }
 
 .article-display{
-  margin-top: 150px;
+  margin-top: 60px;
 }
 
 .article{

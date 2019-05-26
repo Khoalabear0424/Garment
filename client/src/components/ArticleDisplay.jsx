@@ -6,7 +6,7 @@ const ArticleDisplay = props => {
     const { currClothesArray } = props;
 
     return (
-        <div className="row">
+        <div className="row article-display">
             {currClothesArray.map(a =>
                 <Article
                     key={a._id}
