@@ -8,15 +8,13 @@ const Pagination = props => {
     const pages = _.range(1, pageCount + 1);
 
     return (
-        <ul className="pagination">
+        <ul className="pagination justify-content-center">
             {pages.map((page, index) =>
-                <li key={index} className={page === currentPage ? 'active page-item' : 'page-item'}>
-                    <button
-                        className="page-link"
-                        onClick={() => onPageChange(page)}
-                    >
-                        {page}
-                    </button>
+                <li
+                    key={index}
+                    className={page === currentPage ? 'selected-link pagination-item' : 'pagination-item'}
+                    onClick={() => onPageChange(page)}>
+                    {page}
                 </li>)}
         </ul>
     )

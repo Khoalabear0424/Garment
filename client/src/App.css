@@ -2,7 +2,7 @@
   text-align: center;
 }
 
-.selected{
+.selected-link{
   color: rgb(255, 122, 142);
 }
 
@@ -121,8 +121,20 @@ h1{
 
 /*------------------- Pagination -----------------------*/
 .pagination{
-  text-align: center;
+  margin-top: 50px;
   margin-bottom:30px;
 }
 
+.pagination-item{
+  background-color: white;
+  width: 45px;
+  height: 25px;
+  border-radius: 5px;
+}
+
+.pagination-item:hover{
+  background-color: #FFB6C1;
+  color: white;
+  cursor: pointer;
+}
 
