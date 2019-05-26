@@ -12,6 +12,8 @@
   font-size: 30px !important;
   height: 38px;
   padding-top: 0 !important;
+  width: 75%;
+  margin: auto;
 }
 
 /*------------------- NavBar -----------------------*/
