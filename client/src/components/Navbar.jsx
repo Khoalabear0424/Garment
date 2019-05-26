@@ -9,7 +9,7 @@ class Navbar extends Component {
             <nav className="navbar navbar-expand-lg navbar-light fixed-top">
                 <div className="row nav-row">
                     <div className="col-2">
-                        <a className="navbar-brand" href={tempLink}>Garment</a>
+                        <a className="navbar-brand app-name" href={tempLink}>Garment</a>
                     </div>
                     <div className="col-10">
                         <ul className="navbar-nav">
