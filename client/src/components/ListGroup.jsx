@@ -8,7 +8,7 @@ const ListGroup = (props) => {
             <li
                 onClick={() => onClickFilter(item)}
                 key={index}
-                className={item === selectedItem ? 'list-group-item active' : 'list-group-item'}>
+                className={item === selectedItem ? 'list-group-item selected' : 'list-group-item'}>
                 {item}
             </li>
         )}

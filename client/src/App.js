@@ -11,7 +11,8 @@ class App extends Component {
     clothes: [],
     pageSize: 60,
     currentPage: 1,
-    clothesTypes: ['All', 'Tops', 'Dresses', 'Jackets', 'Pants', 'Shorts', 'Shoes']
+    clothesTypes: ['All', 'Tops', 'Dresses', 'Jackets', 'Pants', 'Shorts', 'Shoes'],
+    currentFilter: 'All'
   }
 
   async componentDidMount() {
@@ -28,21 +29,24 @@ class App extends Component {
   }
 
   handleFilter = async (type) => {
+    var { currentFilter } = this.state
+    currentFilter = type;
     if (type === 'All') {
-      const { data: clothes } = await getClothes();
-      this.setState({ clothes })
+      var { data: clothes } = await getClothes();
+      this.setState({ clothes, currentFilter })
     } else {
-      var { clothes } = this.state;
+      var { clothes, currentFilter } = this.state;
+      currentFilter = type;
       getType(type).then((r) => {
         clothes = r;
-        this.setState({ clothes })
+        this.setState({ clothes, currentFilter })
       })
     }
   }
 
   render() {
     const { length: count } = this.state.clothes;
-    const { pageSize, currentPage, clothes: currentClothes, clothesTypes } = this.state;
+    const { pageSize, currentPage, clothes: currentClothes, clothesTypes, currentFilter } = this.state;
 
     const currClothesArray = paginate(currentClothes, currentPage, pageSize)
 
@@ -51,6 +55,7 @@ class App extends Component {
       <div className="row">
         <div className="col-2">
           <ListGroup
+            selectedItem={currentFilter}
             onClickFilter={this.handleFilter}
             clothesTypesArray={clothesTypes}
           />

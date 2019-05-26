@@ -2,6 +2,10 @@
   text-align: center;
 }
 
+.selected{
+  color: rgb(255, 122, 142);
+}
+
 .app-name{
   font-family: 'Neucha', cursive;
   font-size: 100px;
@@ -35,6 +39,8 @@
   width: 100%;
 }
 
+/*------------------- ListGroup -----------------------*/
+
 .list-group{
   margin: 70px 0px 0px 30px;
   top: 50px !important;
@@ -45,13 +51,18 @@
   min-width: 100px;
 }
 
+.list-group-item:hover{
+  color: rgb(255, 122, 142);
+  cursor: pointer;
+}
+
 .nav-row{
   width: 100%;
 }
 
 /*------------------- Article -----------------------*/
 h1{
-  color: red;
+  color: #FFB6C1;
 }
 
 .article-display{
