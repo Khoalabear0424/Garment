@@ -11,6 +11,21 @@ db.on("error", function (error) {
 });
 
 router.get('/', function (req, res) {
+    // db.scrapedData.find({
+    //     'parsedName': { $exists: false }
+    // }, function (error, found) {
+    //     if (error) {
+    //         console.log(error)
+    //     } else {
+    //         const data = found;
+    //         db.nameTracker.find({}, function (error, found) {
+    //             console.log(found)
+    //             res.json(data)
+    //         })
+    //         // res.json(found)
+    //     }
+    // })
+
     db.scrapedData.find({}, function (error, found) {
         if (error) {
             console.log(error);
