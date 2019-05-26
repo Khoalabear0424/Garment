@@ -25,8 +25,36 @@ router.get('/', function (req, res) {
                 wordCounterObj[found[i].word] = found[i].word
             }
             wordCounterObj["Jeans"] = "Jeans";
-            wordCounterObj["MiniDress"] = "MiniDress";
+            wordCounterObj["Jeans:"] = "Jeans:";
+            wordCounterObj["Minidress"] = "Minidress";
+            wordCounterObj["Sundress"] = "Sundress";
+            wordCounterObj["Miniskirt"] = "Miniskirt";
+            wordCounterObj["Skirt:"] = "Skirt:";
             wordCounterObj["Flat"] = "Flat";
+            wordCounterObj["Tunic"] = "Tunic";
+            wordCounterObj["Shoe"] = "Shoe";
+            wordCounterObj["Loafer"] = "Loafer";
+            wordCounterObj["Trousers"] = "Trousers";
+            wordCounterObj["Mule"] = "Mule";
+            wordCounterObj["Pump"] = "Pump";
+            wordCounterObj["Clog"] = "Clog";
+            wordCounterObj["Blouse"] = "Blouse";
+            wordCounterObj["Camisole"] = "Camisole";
+            wordCounterObj["Pullover"] = "Pullover";
+            wordCounterObj["Sweater-Coat"] = "Sweater-Coat";
+            wordCounterObj["Bralette"] = "Bralette";
+            wordCounterObj["Bootie"] = "Bootie";
+            wordCounterObj["Slipper"] = "Slipper";
+            wordCounterObj["Overalls"] = "Overalls";
+            wordCounterObj["Coat"] = "Coat";
+            wordCounterObj["Socks"] = "Socks";
+            wordCounterObj["Shorts:"] = "Shorts:";
+            wordCounterObj["Boyjean"] = "Boyjean";
+            wordCounterObj["Boyjean:"] = "Boyjean:";
+            wordCounterObj["Bralette"] = "Bralette";
+            wordCounterObj["Sunglasses"] = "Sunglasses";
+            wordCounterObj["Sneakers"] = "Sneakers";
+            wordCounterObj["Bandana"] = "Bandana";
 
             db.scrapedData.find({
                 'type': { $exists: false }

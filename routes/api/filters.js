@@ -13,15 +13,17 @@ db.on("error", function (error) {
 router.get('/:type', function (req, res) {
     const type = req.params.type
     const clothesTypeLookUp = {
-        'Tops': ['Top', 'V-Neck', 'Shirt'],
-        'Dresses': ['Dress', 'Floral', 'Skirt', 'MiniDress', 'Sundress'],
-        'Jackets': ['Jacket', 'Coat', 'Cardigan'],
-        'Pants': ['Pants', 'Jeans'],
-        'Shorts': ['Shorts'],
-        'Shoes': ['Flat', 'Slip-On', 'Vans']
+        'Tops': ['Top', 'V-Neck', 'Shirt', 'Blouse', 'Camisole', 'Overalls'],
+        'Dresses': ['Dress', 'Floral', 'Skirt', 'MiniDress', 'Sundress', 'Minidress'],
+        'Jackets': ['Jacket', 'Coat', 'Cardigan', 'Tunic', 'Pullover', 'Sweater-Coat'],
+        'Pants': ['Pants', 'Jeans', 'Trousers', 'Jeans:', 'Boyjean', 'Boyjean:'],
+        'Shorts': ['Shorts', 'Miniskirt', 'Skirt:', 'Shorts:'],
+        'Shoes': ['Flat', 'Slip-On', 'Vans', 'Shoe', 'Loafer', 'Mule', 'Pump', 'Clog', 'Sneakers', 'Slipper', 'Bootie'],
+        'Accessories': ['Sunglasses', 'Bandana', 'Socks']
     }
+
     db.scrapedData.find({
-        'type': { $in: clothesTypeLookUp[type] }
+        'type': clothesTypeLookUp[type] ? { $in: clothesTypeLookUp[type] } : { $exists: false }
     }, function (error, found) {
         if (error) {
             console.log(error);

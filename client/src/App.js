@@ -11,7 +11,7 @@ class App extends Component {
     clothes: [],
     pageSize: 60,
     currentPage: 1,
-    clothesTypes: ['All', 'Tops', 'Dresses', 'Jackets', 'Pants', 'Shorts', 'Shoes'],
+    clothesTypes: ['All', 'Tops', 'Dresses', 'Jackets', 'Pants', 'Shorts', 'Shoes', 'Accessories', 'Misc'],
     currentFilter: 'All'
   }
 
