@@ -29,7 +29,7 @@ router.get('/', function (req, res) {
             wordCounterObj["Flat"] = "Flat";
 
             db.scrapedData.find({
-                'parsedName': { $exists: false }
+                'type': { $exists: false }
             }, function (error, found) {
                 if (error) {
                     console.log(error)
@@ -42,7 +42,6 @@ router.get('/', function (req, res) {
                                     { '_id': found[i]._id },
                                     {
                                         $set: {
-                                            'parsedName': true,
                                             'type': wordCounterObj[name[j]]
                                         }
                                     }
