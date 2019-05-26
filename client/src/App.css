@@ -7,15 +7,46 @@
   background-color: #FFB6C1;
 }
 
+.btn-brand-nav{
+  width: 120px;
+  display: inline-block;
+}
+
+.navbar-nav{
+  flex-direction: row !important;
+  float: right;
+}
+
+.brand-logo{
+  width: 100%;
+}
+
+.list-group{
+  margin: 70px 0px 0px 40px;
+  top: 50px !important;
+  width: 80%;
+}
+
+.list-group-item{
+  min-width: 100px;
+}
+
+.nav-row{
+  width: 100%;
+}
+
 /*------------------- Article -----------------------*/
 h1{
   color: red;
 }
 
-.article{
-  width: 170px !important;
+.article-display{
+  margin-top: 60px;
 }
 
+.article{
+  width: 200px !important;
+} 
 .jumbotron-fluid{
   border-radius: 5px !important;
   padding-top: 2px;
@@ -63,6 +94,10 @@ h1{
   font-size: 11px;
 }
 
-.filter-nav{
-  padding: 20px 0px 0px, 40px !important;
+/*------------------- Pagination -----------------------*/
+.pagination{
+  text-align: center;
+  margin-bottom:30px;
 }
+
+
