@@ -6,7 +6,7 @@ class Navbar extends Component {
     render() {
         const tempLink = "https://www.madewell.com/womens/sale"
         return (
-            <nav className="navbar navbar-expand-lg navbar-light">
+            <nav className="navbar navbar-expand-lg navbar-light fixed-top">
                 <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
                     <span className="navbar-toggler-icon"></span>
                 </button>
@@ -14,12 +14,14 @@ class Navbar extends Component {
                     <a className="navbar-brand" href={tempLink}>Garment</a>
                     <ul className="navbar-nav mr-auto mt-2 mt-lg-0">
                         <li className="nav-item active">
-                            {/* <a className="nav-link" href={tempLink}>Home <span className="sr-only">(current)</span></a> */}
-                            <button className="btn">NordStrom</button>
-
+                            <button className="btn btn-brand-nav">
+                                <img className="brand-logo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1f/Nordstrom_Logo.svg/1280px-Nordstrom_Logo.svg.png" alt="brandLogo" />
+                            </button>
                         </li>
-                        <li className="nav-item">
-                            <a className="nav-link" href={tempLink}>Link</a>
+                        <li className="nav-item active">
+                            <button className="btn btn-brand-nav">
+                                <img className="brand-logo" src="https://brickworks-media-production.s3.amazonaws.com/logo/6/madewell-logo.png" alt="brandLogo" />
+                            </button>
                         </li>
                     </ul>
                     <form className="form-inline my-2 my-lg-0">
