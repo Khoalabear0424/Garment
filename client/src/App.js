@@ -29,6 +29,7 @@ class App extends Component {
   }
 
   handleFilter = async (type) => {
+    this.handlePageChange(1)
     var { currentFilter } = this.state
     currentFilter = type;
     if (type === 'All') {
@@ -57,6 +58,7 @@ class App extends Component {
           <ListGroup
             selectedItem={currentFilter}
             onClickFilter={this.handleFilter}
+            onPageChange={this.handlePageChange}
             clothesTypesArray={clothesTypes}
           />
         </div>

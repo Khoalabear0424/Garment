@@ -1,7 +1,7 @@
 import React from 'react';
 
 const ListGroup = (props) => {
-    const { onClickFilter, clothesTypesArray, selectedItem } = props;
+    const { onClickFilter, clothesTypesArray, selectedItem, onPageChange } = props;
 
     return <ul className="list-group">
         {clothesTypesArray.map((item, index) =>
