@@ -40,19 +40,6 @@ class App extends Component {
     }
   }
 
-  handleFilter = async (type) => {
-    if (type === 'All') {
-      const { data: clothes } = await getClothes();
-      this.setState({ clothes })
-    } else {
-      var { clothes } = this.state;
-      getType(type).then((r) => {
-        clothes = r;
-        this.setState({ clothes })
-      })
-    }
-  }
-
   render() {
     const { length: count } = this.state.clothes;
     const { pageSize, currentPage, clothes: currentClothes, clothesTypes } = this.state;
@@ -64,7 +51,7 @@ class App extends Component {
       <div className="row">
         <div className="col-2">
           <ListGroup
-            // onClickFilter={this.handleFilter}
+            onClickFilter={this.handleFilter}
             clothesTypesArray={clothesTypes}
           />
         </div>
@@ -74,6 +61,7 @@ class App extends Component {
           />
         </div>
       </div>
+
       <div className="container">
         <Pagination
           itemsCount={count}
