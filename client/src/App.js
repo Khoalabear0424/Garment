@@ -26,6 +26,7 @@ class App extends Component {
 
   handlePageChange = page => {
     this.setState({ currentPage: page })
+    window.scrollTo(0, 0)
   }
 
   handleFilter = async (type) => {
