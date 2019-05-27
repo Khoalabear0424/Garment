@@ -32,6 +32,7 @@ db.on("error", function (error) {
 //----------------WEB SCRAPE--------------//
 app.use('/scrape-nordStrom', require('./routes/scrape/nordstrom'));
 app.use('/scrape-madeWell', require('./routes/scrape/madewell'));
+app.use('/scrape-anthropologie', require('./routes/scrape/anthropologie'));
 
 
 //----------------API----------------//
