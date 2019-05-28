@@ -14,7 +14,7 @@ db.on("error", function (error) {
     console.log("Database Error:", error);
 });
 
-var pagesToScrape = 2;
+var pagesToScrape = 1;
 
 router.get('/', function (req, res) {
     async function scrape() {
@@ -24,7 +24,7 @@ router.get('/', function (req, res) {
 
         const browser = await puppeteer.launch({ headless: false, defaultViewport: null });
         const page = await browser.newPage();
-        await page.goto('https://shop.nordstrom.com/c/all-womens-sale');
+        await page.goto('https://www.anthropologie.com/sale-all');
 
         // Get the height of the rendered page
         let bodyHandle = await page.$('body');
@@ -32,7 +32,7 @@ router.get('/', function (req, res) {
         await bodyHandle.dispose();
 
         // Scroll one viewport at a time, pausing to let content load
-        const viewportHeight = 500
+        const viewportHeight = height
         let viewportIncr = 0;
         let pages = 0;
 
@@ -51,7 +51,7 @@ router.get('/', function (req, res) {
                 data[i] =
                     {
                         name: $($($(this))).find('h3').children().children().text(),
-                        brand: "Nordstrom",
+                        brand: "Anthropologie",
                         brandLogo: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1f/Nordstrom_Logo.svg/1280px-Nordstrom_Logo.svg.png",
                         src: $(this).find('div').find('img').attr('src'),
                         link: 'https://shop.nordstrom.com' + $(this).find('a').attr('href'),
@@ -63,7 +63,7 @@ router.get('/', function (req, res) {
 
                     }
             })
-            insertDataIntoDB(data)
+            // insertDataIntoDB(data)
             await wait(3000);
             await page.click('.nui-icon-large-chevron-right');
             viewportIncr = 0

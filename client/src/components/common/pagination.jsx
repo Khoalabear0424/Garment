@@ -7,10 +7,10 @@ const Pagination = props => {
     if (pageCount === 1) return null;
     const currentRange = Math.ceil(currentPage / 5);
     const renderRange = (parseInt(pageCount - currentPage) === 0 ? currentPage : currentRange * 5 + 1);
-    const pages = _.range(currentRange * 5 - 4, renderRange);
+    const pages = _.range(currentRange * 5 - 4, (pageCount < 5 ? pageCount : renderRange));
 
     const nextButton = () => {
-        if (currentPage === pageCount) return null
+        if (currentPage === pageCount || pageCount < 5) return null
         return <li
             className="pagination-item"
             onClick={() => onPageChange(currentPage + 1)}>
