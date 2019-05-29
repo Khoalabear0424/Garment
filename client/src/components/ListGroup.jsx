@@ -12,6 +12,13 @@ const ListGroup = (props) => {
                 {item}
             </li>
         )}
+        <br></br>
+        <li className="list-group-item">
+            $ - $$
+        </li>
+        <li className="list-group-item">
+            % - %%
+        </li>
     </ul>
 };
 
