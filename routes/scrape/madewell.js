@@ -67,10 +67,7 @@ router.get('/', function (req, res) {
             for (var i = 0; i < productName.length; i++) {
 
                 var isDiscountExist = prevPrice[i].children[1] ? true : false;
-
                 var percentDiscount = isDiscountExist ? (prevPrice[i].children[0].innerText.split("\n")[0].slice(1) - prevPrice[i].children[1].innerText.slice(1)) / prevPrice[i].children[0].innerText.split("\n")[0].slice(1) : false;
-
-                console.log('Hello')
 
                 clothesArray[i] = {
                     name: productName[i].innerText.trim(),
