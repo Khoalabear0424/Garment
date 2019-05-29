@@ -15,7 +15,7 @@ db.on("error", function (error) {
     console.log("Database Error:", error);
 });
 
-const pagesToScrape = 20;
+const pagesToScrape = 1;
 
 router.get('/', function (req, res) {
     let scrape = async () => {
@@ -81,7 +81,7 @@ router.get('/', function (req, res) {
                     price: {
                         prev: isDiscountExist ? prevPrice[i].children[0].innerText.split("\n")[0].slice(1) : false,
                         curr: isDiscountExist ? prevPrice[i].children[1].innerText : prevPrice[i].children[0].innerText.split("\n")[0].slice(1),
-                        discount: prevPrice[i].children[1] ? Math.floor(percentDiscount * 100) + "% off" : false
+                        discount: prevPrice[i].children[1] ? Math.floor(percentDiscount * 100) : false
                     }
                 }
             }
