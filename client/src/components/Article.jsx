@@ -2,10 +2,13 @@ import React, { Component } from 'react';
 import '../App.css';
 import Like from "./common/like";
 
+const discountPercentDisplay = (discount, name) => {
+    console.log(`discount: ${discount}, itemName: ${name}, isFinite ${isFinite(discount)}`)
+    return discount ? '%off' : false;
+}
+
 class Article extends Component {
-
     render() {
-
         const { name, imgSrc, link, prev, curr, discount, brandLogo } = this.props
 
         return (
@@ -17,8 +20,8 @@ class Article extends Component {
                         <Like />
                     </h6>
                     <span className="originalPrice">{prev}</span>
-                    <span className="price"> {curr} </span>
-                    <span className="percentOff"> {discount} </span>
+                    <span className="price"> ${curr} </span>
+                    <span className="percentOff"> {discount}{discountPercentDisplay(discount, name)} </span>
                     <img className="figure-img img-fluid rounded brand" src={brandLogo} alt="brandLogo" />
                 </figcaption>
             </figure>

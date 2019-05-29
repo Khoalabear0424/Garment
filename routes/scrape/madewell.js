@@ -15,7 +15,7 @@ db.on("error", function (error) {
     console.log("Database Error:", error);
 });
 
-const pagesToScrape = 1;
+const pagesToScrape = 3;
 
 router.get('/', function (req, res) {
     let scrape = async () => {
@@ -79,8 +79,8 @@ router.get('/', function (req, res) {
                     src: imgLink[i].getAttribute('src'),
                     link: productName[i].children[0].getAttribute('href'),
                     price: {
-                        prev: isDiscountExist ? prevPrice[i].children[0].innerText.split("\n")[0].slice(1) : false,
-                        curr: isDiscountExist ? prevPrice[i].children[1].innerText : prevPrice[i].children[0].innerText.split("\n")[0].slice(1),
+                        prev: isDiscountExist ? prevPrice[i].children[0].innerText.split("\n")[0] : false,
+                        curr: isDiscountExist ? prevPrice[i].children[1].innerText[0].slice(1) : prevPrice[i].children[0].innerText.split("\n")[0].slice(1),
                         discount: prevPrice[i].children[1] ? Math.floor(percentDiscount * 100) : false
                     }
                 }

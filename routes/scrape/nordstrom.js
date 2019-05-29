@@ -57,7 +57,7 @@ router.get('/', function (req, res) {
                         src: $(this).find('div').find('img').attr('src'),
                         link: 'https://shop.nordstrom.com' + $(this).find('a').attr('href'),
                         price: {
-                            prev: $($($(this))).find('div').eq(-2).children().last().text().split(" ")[0].slice(1),
+                            prev: $($($(this))).find('div').eq(-2).children().last().text().split(" ")[0],
                             curr: $($($(this))).find('div').eq(-1).children().eq(-2).text().split(" ")[0].slice(1),
                             discount: $($($(this))).find('div').eq(-1).children().last().html().split(" ")[0].slice(0, -1)
                         }
