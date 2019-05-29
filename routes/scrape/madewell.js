@@ -5,6 +5,7 @@ const puppeteer = require('puppeteer');
 const cheerio = require('cheerio');
 const mongojs = require("mongojs");
 const insertDataIntoDB = require('../../utils/lib/insertIntoDB');
+const typeCounter = require('../../utils/lib/sortWordType');
 
 
 var databaseUrl = "garmet_DB";
@@ -78,8 +79,8 @@ router.get('/', function (req, res) {
                     src: imgLink[i].getAttribute('src'),
                     link: productName[i].children[0].getAttribute('href'),
                     price: {
-                        prev: isDiscountExist ? prevPrice[i].children[0].innerText.split("\n")[0] : false,
-                        curr: isDiscountExist ? prevPrice[i].children[1].innerText : prevPrice[i].children[0].innerText.split("\n")[0],
+                        prev: isDiscountExist ? prevPrice[i].children[0].innerText.split("\n")[0].slice(1) : false,
+                        curr: isDiscountExist ? prevPrice[i].children[1].innerText : prevPrice[i].children[0].innerText.split("\n")[0].slice(1),
                         discount: prevPrice[i].children[1] ? Math.floor(percentDiscount * 100) + "% off" : false
                     }
                 }
@@ -92,6 +93,7 @@ router.get('/', function (req, res) {
 
     scrape().then((value) => {
         insertDataIntoDB(value);
+        // typeCounter();
         res.send(value)
     })
 })

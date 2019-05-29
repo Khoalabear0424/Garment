@@ -5,6 +5,7 @@ const puppeteer = require('puppeteer');
 const cheerio = require('cheerio');
 var mongojs = require("mongojs");
 const insertDataIntoDB = require('../../utils/lib/insertIntoDB');
+const typeCounter = require('../../utils/lib/sortWordType');
 
 
 var databaseUrl = "garmet_DB";
@@ -14,7 +15,7 @@ db.on("error", function (error) {
     console.log("Database Error:", error);
 });
 
-var pagesToScrape = 2;
+var pagesToScrape = 1;
 
 router.get('/', function (req, res) {
     async function scrape() {
@@ -56,8 +57,8 @@ router.get('/', function (req, res) {
                         src: $(this).find('div').find('img').attr('src'),
                         link: 'https://shop.nordstrom.com' + $(this).find('a').attr('href'),
                         price: {
-                            prev: $($($(this))).find('div').eq(-2).children().last().text().split(" ")[0],
-                            curr: $($($(this))).find('div').eq(-1).children().eq(-2).text().split(" ")[0],
+                            prev: $($($(this))).find('div').eq(-2).children().last().text().split(" ")[0].slice(1),
+                            curr: $($($(this))).find('div').eq(-1).children().eq(-2).text().split(" ")[0].slice(1),
                             discount: $($($(this))).find('div').eq(-1).children().last().html()
                         }
 
@@ -74,7 +75,11 @@ router.get('/', function (req, res) {
         await browser.close();
     };
 
-    scrape()
+    scrape().then(() => {
+        return
+        // typeCounter();
+    })
+
 })
 
 module.exports = router;

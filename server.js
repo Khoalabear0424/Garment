@@ -36,7 +36,6 @@ app.use('/scrape-anthropologie', require('./routes/scrape/anthropologie'));
 
 
 //----------------API----------------//
-app.use('/sort-word-type', require('./routes/api/sortWordType'));
 app.use('/parse-word-type', require('./routes/api/parseNames'));
 app.use('/all-data', require('./routes/api/getAllData'));
 app.use('/filter', require('./routes/api/filters'));
