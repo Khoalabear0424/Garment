@@ -19,7 +19,7 @@ class Article extends Component {
                         <a href={link} className="itemName">{name} </a>
                         <Like />
                     </h6>
-                    <span className="originalPrice">{prev}</span>
+                    <span className="originalPrice">${prev}</span>
                     <span className="price"> ${curr} </span>
                     <span className="percentOff"> {discount}{discountPercentDisplay(discount, name)} </span>
                     <img className="figure-img img-fluid rounded brand" src={brandLogo} alt="brandLogo" />

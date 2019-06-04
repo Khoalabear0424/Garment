@@ -67,7 +67,9 @@ router.get('/', function (req, res) {
             for (var i = 0; i < productName.length; i++) {
 
                 var extraDivExists = prevPrice[i].children[0].lastChild.innerText ? true : false;
-                // var percentDiscount = isDiscountExist ? (prevPrice[i].children[0].innerText.split("\n")[0].slice(1) - prevPrice[i].children[1].innerText.slice(1)) / prevPrice[i].children[0].innerText.split("\n")[0].slice(1) : false;
+                var previousPrice = extraDivExists ? prevPrice[i].children[0].children[0].innerText.slice(1) : prevPrice[i].children[0].innerText.slice(1);
+                var currentPrice = extraDivExists ? prevPrice[i].children[0].lastChild.innerText.split(" ")[0].slice(1) : prevPrice[i].children[1].innerText.split(" ")[0].slice(1);
+                var percentDiscount = Math.floor((currentPrice / previousPrice) * 100)
 
                 clothesArray[i] = {
                     name: productName[i].innerText.trim(),
@@ -76,9 +78,9 @@ router.get('/', function (req, res) {
                     src: imgLink[i].getAttribute('src'),
                     link: productName[i].children[0].getAttribute('href'),
                     price: {
-                        prev: extraDivExists ? prevPrice[i].children[0].children[0].innerText : prevPrice[i].children[0].innerText,
-                        curr: extraDivExists ? prevPrice[i].children[0].lastChild.innerText : prevPrice[i].children[1].innerText,
-                        // discount: prevPrice[i].children[1] ? Math.floor(percentDiscount * 100) : false
+                        prev: previousPrice,
+                        curr: currentPrice,
+                        discount: percentDiscount
                     }
                 }
             }
