@@ -56,6 +56,16 @@ router.get('/', function (req, res) {
             wordCounterObj["Sunglasses"] = "Sunglasses";
             wordCounterObj["Sneakers"] = "Sneakers";
             wordCounterObj["Bandana"] = "Bandana";
+            wordCounterObj["Boots"] = "Boots";
+            wordCounterObj["Hat"] = "Hat";
+            wordCounterObj["Beanie"] = "Beanie";
+            wordCounterObj["Sunhat"] = "Sunhat";
+            wordCounterObj["Bodysuit"] = "Bodysuit";
+            wordCounterObj["Romper"] = "Romper";
+            wordCounterObj["Tights"] = "Sunhat";
+            wordCounterObj["Sweater-Dress"] = "Sweater-Dress";
+            wordCounterObj["Robe"] = "Robe";
+
 
             db.scrapedData.find({
                 'type': { $exists: false }
