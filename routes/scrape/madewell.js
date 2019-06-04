@@ -15,7 +15,7 @@ db.on("error", function (error) {
     console.log("Database Error:", error);
 });
 
-const pagesToScrape = 3;
+const pagesToScrape = 2;
 
 router.get('/', function (req, res) {
     let scrape = async () => {
@@ -66,8 +66,8 @@ router.get('/', function (req, res) {
 
             for (var i = 0; i < productName.length; i++) {
 
-                var isDiscountExist = prevPrice[i].children[1] ? true : false;
-                var percentDiscount = isDiscountExist ? (prevPrice[i].children[0].innerText.split("\n")[0].slice(1) - prevPrice[i].children[1].innerText.slice(1)) / prevPrice[i].children[0].innerText.split("\n")[0].slice(1) : false;
+                var extraDivExists = prevPrice[i].children[0].lastChild.innerText ? true : false;
+                // var percentDiscount = isDiscountExist ? (prevPrice[i].children[0].innerText.split("\n")[0].slice(1) - prevPrice[i].children[1].innerText.slice(1)) / prevPrice[i].children[0].innerText.split("\n")[0].slice(1) : false;
 
                 clothesArray[i] = {
                     name: productName[i].innerText.trim(),
@@ -76,9 +76,9 @@ router.get('/', function (req, res) {
                     src: imgLink[i].getAttribute('src'),
                     link: productName[i].children[0].getAttribute('href'),
                     price: {
-                        prev: isDiscountExist ? prevPrice[i].children[0].innerText.split("\n")[0] : false,
-                        curr: isDiscountExist ? prevPrice[i].children[1].innerText[0].slice(1) : prevPrice[i].children[0].innerText.split("\n")[0].slice(1),
-                        discount: prevPrice[i].children[1] ? Math.floor(percentDiscount * 100) : false
+                        prev: extraDivExists ? prevPrice[i].children[0].children[0].innerText : prevPrice[i].children[0].innerText,
+                        curr: extraDivExists ? prevPrice[i].children[0].lastChild.innerText : prevPrice[i].children[1].innerText,
+                        // discount: prevPrice[i].children[1] ? Math.floor(percentDiscount * 100) : false
                     }
                 }
             }

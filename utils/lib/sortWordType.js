@@ -10,7 +10,7 @@ db.on("error", function (error) {
     console.log("Database Error:", error);
 });
 
-const sortWordType = () => {
+router.get('/', function (req, res) {
     console.log(`Sorting word type...`)
     db.typeCounter.find({
         'word': {
@@ -82,6 +82,6 @@ const sortWordType = () => {
             })
         }
     })
-}
+})
 
-module.exports = sortWordType;
+module.exports = router;

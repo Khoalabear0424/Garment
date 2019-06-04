@@ -22,18 +22,7 @@ router.get('/:type', function (req, res) {
         'Accessories': ['Sunglasses', 'Bandana', 'Socks']
     }
 
-    db.scrapedData.find({}).sort({ 'price.discount': 1 }, function (error, found) {
-        if (error) {
-            console.log(error);
-        }
-        else {
-            res.json(found)
-        }
-    });
-
-    // db.scrapedData.find({
-    //     'type': clothesTypeLookUp[type] ? { $in: clothesTypeLookUp[type] } : { $exists: false }
-    // }, function (error, found) {
+    // db.scrapedData.find({}).sort({ 'price.discount': 1 }, function (error, found) {
     //     if (error) {
     //         console.log(error);
     //     }
@@ -41,6 +30,17 @@ router.get('/:type', function (req, res) {
     //         res.json(found)
     //     }
     // });
+
+    db.scrapedData.find({
+        'type': clothesTypeLookUp[type] ? { $in: clothesTypeLookUp[type] } : { $exists: false }
+    }, function (error, found) {
+        if (error) {
+            console.log(error);
+        }
+        else {
+            res.json(found)
+        }
+    });
 
 
 })

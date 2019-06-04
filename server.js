@@ -33,6 +33,7 @@ db.on("error", function (error) {
 app.use('/scrape-nordStrom', require('./routes/scrape/nordstrom'));
 app.use('/scrape-madeWell', require('./routes/scrape/madewell'));
 app.use('/scrape-anthropologie', require('./routes/scrape/anthropologie'));
+app.use('/sort-word-type', require('./utils/lib/sortWordType'));
 
 
 //----------------API----------------//
