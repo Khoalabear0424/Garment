@@ -15,7 +15,7 @@ db.on("error", function (error) {
     console.log("Database Error:", error);
 });
 
-const pagesToScrape = 2;
+const pagesToScrape = 30;
 
 router.get('/', function (req, res) {
     let scrape = async () => {
@@ -68,7 +68,7 @@ router.get('/', function (req, res) {
 
                 var extraDivExists = prevPrice[i].children[0].lastChild.innerText ? true : false;
                 var previousPrice = extraDivExists ? prevPrice[i].children[0].children[0].innerText.slice(1) : prevPrice[i].children[0].innerText.slice(1);
-                var currentPrice = extraDivExists ? prevPrice[i].children[0].lastChild.innerText.split(" ")[0].slice(1) : prevPrice[i].children[1].innerText.split(" ")[0].slice(1);
+                var currentPrice = extraDivExists ? prevPrice[i].children[0].lastChild.innerText.split(" ")[0].slice(1) : (prevPrice[i].children[1] ? prevPrice[i].children[1].innerText.split(" ")[0].slice(1) : null);
                 var percentDiscount = Math.floor((currentPrice / previousPrice) * 100)
 
                 clothesArray[i] = {
