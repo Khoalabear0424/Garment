@@ -22,7 +22,6 @@ router.get('/:type', function (req, res) {
         'Accessories': ['Sunglasses', 'Bandana', 'Socks', 'Hat', 'Sunhat', 'Beanie', 'Tights', 'Robe']
     }
 
-
     // db.scrapedData.find({}).sort({ 'price.discount': 1 }, function (error, found) {
     //     if (error) {
     //         console.log(error);
