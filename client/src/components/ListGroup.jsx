@@ -12,6 +12,14 @@ const ListGroup = (props) => {
                 {item}
             </li>
         )}
+        <br></br>
+        <li className="list-group-item"
+            onClick={() => alert('hello')}>
+            $ - $$
+        </li>
+        <li className="list-group-item">
+            % - %%
+        </li>
     </ul>
 };
 

@@ -5,6 +5,7 @@ const puppeteer = require('puppeteer');
 const cheerio = require('cheerio');
 const mongojs = require("mongojs");
 const insertDataIntoDB = require('../../utils/lib/insertIntoDB');
+const typeCounter = require('../../utils/lib/sortWordType');
 
 
 var databaseUrl = "garmet_DB";
@@ -14,7 +15,7 @@ db.on("error", function (error) {
     console.log("Database Error:", error);
 });
 
-const pagesToScrape = 20;
+const pagesToScrape = 2;
 
 router.get('/', function (req, res) {
     let scrape = async () => {
@@ -65,11 +66,10 @@ router.get('/', function (req, res) {
 
             for (var i = 0; i < productName.length; i++) {
 
-                var isDiscountExist = prevPrice[i].children[1] ? true : false;
-
-                var percentDiscount = isDiscountExist ? (prevPrice[i].children[0].innerText.split("\n")[0].slice(1) - prevPrice[i].children[1].innerText.slice(1)) / prevPrice[i].children[0].innerText.split("\n")[0].slice(1) : false;
-
-                console.log('Hello')
+                var extraDivExists = prevPrice[i].children[0].lastChild.innerText ? true : false;
+                var previousPrice = extraDivExists ? prevPrice[i].children[0].children[0].innerText.slice(1) : prevPrice[i].children[0].innerText.slice(1);
+                var currentPrice = extraDivExists ? prevPrice[i].children[0].lastChild.innerText.split(" ")[0].slice(1) : (prevPrice[i].children[1] ? prevPrice[i].children[1].innerText.split(" ")[0].slice(1) : null);
+                var percentDiscount = Math.floor((currentPrice / previousPrice) * 100)
 
                 clothesArray[i] = {
                     name: productName[i].innerText.trim(),
@@ -78,9 +78,9 @@ router.get('/', function (req, res) {
                     src: imgLink[i].getAttribute('src'),
                     link: productName[i].children[0].getAttribute('href'),
                     price: {
-                        prev: isDiscountExist ? prevPrice[i].children[0].innerText.split("\n")[0] : false,
-                        curr: isDiscountExist ? prevPrice[i].children[1].innerText : prevPrice[i].children[0].innerText.split("\n")[0],
-                        discount: prevPrice[i].children[1] ? Math.floor(percentDiscount * 100) + "% off" : false
+                        prev: previousPrice,
+                        curr: currentPrice,
+                        discount: percentDiscount
                     }
                 }
             }
@@ -92,6 +92,7 @@ router.get('/', function (req, res) {
 
     scrape().then((value) => {
         insertDataIntoDB(value);
+        // typeCounter();
         res.send(value)
     })
 })
