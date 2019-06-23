@@ -35,15 +35,6 @@ router.get('/:type/:brand/:value', function (req, res) {
         '%% - %': 1
     }
 
-    // db.scrapedData.find({}).sort({ 'price.discount': -1 }, function (error, found) {
-    //     if (error) {
-    //         console.log(error);
-    //     }
-    //     else {
-    //         res.json(found)
-    //     }
-    // });
-
     db.scrapedData.find({
         'type': clothesTypeLookUp[type] ? { $in: clothesTypeLookUp[type] } : { $exists: false },
         'brand': brand === 'null' ? { $exists: true } : brand
@@ -57,20 +48,28 @@ router.get('/:type/:brand/:value', function (req, res) {
             res.json(found)
         }
     });
+})
 
-    // db.scrapedData.find({
-    //     'type': clothesTypeLookUp[type] ? { $in: clothesTypeLookUp[type] } : { $exists: false },
-    //     'brand': brand === 'null' ? { $exists: true } : brand
-    // }, function (error, found) {
+module.exports = router;
+
+
+    //-----------------PARSE FLOAT ALL CURRENT PRICES-----------------//
+    // db.scrapedData.find({}, function (error, found) {
     //     if (error) {
     //         console.log(error);
     //     }
     //     else {
-    //         res.json(found)
+    //         for (let i = 0; i < found.length; i++) {
+    //             let parsedPrice = parseFloat(found[i].price.curr)
+    //             db.scrapedData.update(
+    //                 { _id: found[i]._id },
+    //                 {
+    //                     $set:
+    //                     {
+    //                         'price.curr': parsedPrice
+    //                     }
+    //                 }
+    //             )
+    //         }
     //     }
     // });
-
-
-})
-
-module.exports = router;
