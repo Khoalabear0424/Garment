@@ -29,17 +29,17 @@ class App extends Component {
     window.scrollTo(0, 0)
   }
 
-  handleFilter = async (type) => {
+  handleFilter = async (type, brand = null, value = 'All') => {
     this.handlePageChange(1)
     var { currentFilter } = this.state
     currentFilter = type;
     if (type === 'All') {
       var { data: clothes } = await getClothes();
-      this.setState({ clothes, currentFilter })
+      this.setState({ clothes })
     } else {
       var { clothes, currentFilter } = this.state;
       currentFilter = type;
-      getType(type).then((r) => {
+      getType(type, brand, value).then((r) => {
         clothes = r;
         this.setState({ clothes, currentFilter })
       })

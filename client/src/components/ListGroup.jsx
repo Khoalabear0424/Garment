@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
 
 class ListGroup extends Component {
-    state = {}
+    state = {
+
+    }
+
     render() {
         const { onClickFilter, clothesTypesArray, selectedItem, onPageChange, checkState } = this.props;
         return <ul className="list-group">
@@ -17,10 +20,10 @@ class ListGroup extends Component {
             <li className="list-group-item"
                 onClick={() => checkState()}>
                 $ - $$
-        </li>
+            </li>
             <li className="list-group-item">
                 % - %%
-        </li>
+            </li>
         </ul>
     }
 }

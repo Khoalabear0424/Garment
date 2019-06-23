@@ -10,8 +10,13 @@ db.on("error", function (error) {
     console.log("Database Error:", error);
 });
 
-router.get('/:type', function (req, res) {
-    const type = req.params.type
+router.get('/:type/:brand/:value', function (req, res) {
+    const type = req.params.type;
+    const brand = req.params.brand;
+    const value = req.params.value;
+
+    console.log(`type=${type}, brand=${brand}, value=${value}`)
+
     const clothesTypeLookUp = {
         'Tops': ['Top', 'V-Neck', 'Shirt', 'Blouse', 'Camisole', 'Overalls', 'Bodysuit'],
         'Dresses': ['Dress', 'Floral', 'Skirt', 'MiniDress', 'Sundress', 'Minidress', 'Romper', 'Sweater-Dress'],
@@ -22,7 +27,15 @@ router.get('/:type', function (req, res) {
         'Accessories': ['Sunglasses', 'Bandana', 'Socks', 'Hat', 'Sunhat', 'Beanie', 'Tights', 'Robe']
     }
 
-    // db.scrapedData.find({}).sort({ 'price.discount': 1 }, function (error, found) {
+    const clothesValueLookUp = {
+        'All': 1,
+        '$ - $$': -1,
+        '$$ - $': 1,
+        '% - %%': -1,
+        '%% - %': 1
+    }
+
+    // db.scrapedData.find({}).sort({ 'price.discount': -1 }, function (error, found) {
     //     if (error) {
     //         console.log(error);
     //     }
@@ -32,7 +45,10 @@ router.get('/:type', function (req, res) {
     // });
 
     db.scrapedData.find({
-        'type': clothesTypeLookUp[type] ? { $in: clothesTypeLookUp[type] } : { $exists: false }
+        'type': clothesTypeLookUp[type] ? { $in: clothesTypeLookUp[type] } : { $exists: false },
+        'brand': brand === 'null' ? { $exists: true } : brand
+    }).sort({
+        'price.curr': -1
     }, function (error, found) {
         if (error) {
             console.log(error);
@@ -41,6 +57,18 @@ router.get('/:type', function (req, res) {
             res.json(found)
         }
     });
+
+    // db.scrapedData.find({
+    //     'type': clothesTypeLookUp[type] ? { $in: clothesTypeLookUp[type] } : { $exists: false },
+    //     'brand': brand === 'null' ? { $exists: true } : brand
+    // }, function (error, found) {
+    //     if (error) {
+    //         console.log(error);
+    //     }
+    //     else {
+    //         res.json(found)
+    //     }
+    // });
 
 
 })
