@@ -21,7 +21,7 @@ class App extends Component {
   }
 
   checkMethod = () => {
-    console.log(this.state)
+    alert(this.state.currentFilter)
   }
 
   handlePageChange = page => {
@@ -57,6 +57,7 @@ class App extends Component {
       <div className="row">
         <div className="col-lg-2 col-md-2 col-sm-2">
           <ListGroup
+            checkState={this.checkMethod}
             selectedItem={currentFilter}
             onClickFilter={this.handleFilter}
             onPageChange={this.handlePageChange}

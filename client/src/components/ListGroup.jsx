@@ -1,26 +1,28 @@
-import React from 'react';
+import React, { Component } from 'react';
 
-const ListGroup = (props) => {
-    const { onClickFilter, clothesTypesArray, selectedItem, onPageChange } = props;
-
-    return <ul className="list-group">
-        {clothesTypesArray.map((item, index) =>
-            <li
-                onClick={() => onClickFilter(item)}
-                key={index}
-                className={item === selectedItem ? 'list-group-item selected-link' : 'list-group-item'}>
-                {item}
-            </li>
-        )}
-        <br></br>
-        <li className="list-group-item"
-            onClick={() => alert('hello')}>
-            $ - $$
+class ListGroup extends Component {
+    state = {}
+    render() {
+        const { onClickFilter, clothesTypesArray, selectedItem, onPageChange, checkState } = this.props;
+        return <ul className="list-group">
+            {clothesTypesArray.map((item, index) =>
+                <li
+                    onClick={() => onClickFilter(item)}
+                    key={index}
+                    className={item === selectedItem ? 'list-group-item selected-link' : 'list-group-item'}>
+                    {item}
+                </li>
+            )}
+            <br></br>
+            <li className="list-group-item"
+                onClick={() => checkState()}>
+                $ - $$
         </li>
-        <li className="list-group-item">
-            % - %%
+            <li className="list-group-item">
+                % - %%
         </li>
-    </ul>
-};
+        </ul>
+    }
+}
 
 export default ListGroup;
