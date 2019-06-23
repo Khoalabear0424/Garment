@@ -18,11 +18,8 @@ class ListGroup extends Component {
             )}
             <br></br>
             <li className="list-group-item"
-                onClick={() => checkState()}>
+                onClick={() => onClickFilter(null, null, '$ - $$')}>
                 $ - $$
-            </li>
-            <li className="list-group-item">
-                % - %%
             </li>
         </ul>
     }

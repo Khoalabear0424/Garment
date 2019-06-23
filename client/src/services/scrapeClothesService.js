@@ -9,8 +9,8 @@ export function getClothesTypes() {
     return http.get(`${apiUrl}/sort-word-type`)
 }
 
-export function getType(type, brand, value) {
-    return fetch(`${apiUrl}/filter/${type}/${brand}/${value}`, {
+export function getType(type, brand, price) {
+    return fetch(`${apiUrl}/filter/${type}/${brand}/${price}`, {
         method: 'GET'
     }).then(function (response) {
         if (response.ok) {

@@ -10,12 +10,12 @@ db.on("error", function (error) {
     console.log("Database Error:", error);
 });
 
-router.get('/:type/:brand/:value', function (req, res) {
+router.get('/:type/:brand/:price', function (req, res) {
     const type = req.params.type;
     const brand = req.params.brand;
-    const value = req.params.value;
+    const price = req.params.price;
 
-    console.log(`type=${type}, brand=${brand}, value=${value}`)
+    console.log(`type=${type}, brand=${brand}, price=${price}`)
 
     const clothesTypeLookUp = {
         'Tops': ['Top', 'V-Neck', 'Shirt', 'Blouse', 'Camisole', 'Overalls', 'Bodysuit'],
@@ -27,19 +27,19 @@ router.get('/:type/:brand/:value', function (req, res) {
         'Accessories': ['Sunglasses', 'Bandana', 'Socks', 'Hat', 'Sunhat', 'Beanie', 'Tights', 'Robe']
     }
 
-    const clothesValueLookUp = {
-        'All': 1,
+    const clothesPriceLookUp = {
+        'null': 1,
         '$ - $$': -1,
-        '$$ - $': 1,
-        '% - %%': -1,
-        '%% - %': 1
+        '$$ - $': 1
     }
+
+    let filterPrice = clothesPriceLookUp[price];
 
     db.scrapedData.find({
         'type': clothesTypeLookUp[type] ? { $in: clothesTypeLookUp[type] } : { $exists: false },
         'brand': brand === 'null' ? { $exists: true } : brand
     }).sort({
-        'price.curr': -1
+        'price.curr': filterPrice
     }, function (error, found) {
         if (error) {
             console.log(error);
