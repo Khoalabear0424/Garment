@@ -53,23 +53,53 @@ router.get('/:type/:brand/:value', function (req, res) {
 module.exports = router;
 
 
-    //-----------------PARSE FLOAT ALL CURRENT PRICES-----------------//
-    // db.scrapedData.find({}, function (error, found) {
-    //     if (error) {
-    //         console.log(error);
-    //     }
-    //     else {
-    //         for (let i = 0; i < found.length; i++) {
-    //             let parsedPrice = parseFloat(found[i].price.curr)
-    //             db.scrapedData.update(
-    //                 { _id: found[i]._id },
-    //                 {
-    //                     $set:
-    //                     {
-    //                         'price.curr': parsedPrice
-    //                     }
-    //                 }
-    //             )
-    //         }
-    //     }
-    // });
+// //-----------------DELETE ALL DUPLICATES-----------------//
+// db.scrapedData.find({}, function (error, found) {
+//     if (error) {
+//         console.log(error);
+//     }
+//     else {
+//         let hash = {};
+//         let dup = [];
+//         for (let i of found) {
+//             if (hash[i.name]) {
+//                 dup.push({
+//                     '_id': i._id,
+//                     'name': i.name
+//                 })
+//             }
+//             else {
+//                 hash[i.name] = true;
+//             }
+//         }
+
+//         for (let i of dup) {
+//             db.scrapedData.remove(
+//                 { '_id': i._id }
+//             )
+//         }
+//         console.log(dup);
+//     }
+// });
+
+//-----------------PARSE FLOAT ALL CURRENT PRICES-----------------//
+// db.scrapedData.find({}, function (error, found) {
+//     if (error) {
+//         console.log(error);
+//     }
+//     else {
+//         for (let i = 0; i < found.length; i++) {
+//             let parsedPrice = parseFloat(found[i].price.curr)
+//             db.scrapedData.update(
+//                 { _id: found[i]._id },
+//                 {
+//                     $set:
+//                     {
+//                         'price.curr': parsedPrice
+//                     }
+//                 }
+//             )
+//         }
+//     }
+// });
+
