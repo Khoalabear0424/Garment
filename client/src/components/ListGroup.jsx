@@ -30,7 +30,7 @@ class ListGroup extends Component {
             <br></br>
             <li className="list-group-item"
                 onClick={() => onClickFilter(null, null, this.priceFilter())}>
-                $ - $$
+                {this.state.priceFilterValue}
             </li>
         </ul>
     }

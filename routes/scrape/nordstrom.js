@@ -5,7 +5,10 @@ const puppeteer = require('puppeteer');
 const cheerio = require('cheerio');
 var mongojs = require("mongojs");
 const insertDataIntoDB = require('../../utils/lib/insertIntoDB');
-const typeCounter = require('../../utils/lib/sortWordType');
+const sortWordType = require('../../utils/lib/sortWordType');
+const parseFloatAllCurrPrices = require('../../utils/lib/parseFloatAllCurrPrices');
+const deleteAllDuplicates = require('../../utils/lib/deleteAllDulicates');
+
 
 
 var databaseUrl = "garmet_DB";
@@ -15,7 +18,7 @@ db.on("error", function (error) {
     console.log("Database Error:", error);
 });
 
-var pagesToScrape = 210;
+var pagesToScrape = 1;
 
 router.get('/', function (req, res) {
     async function scrape() {
@@ -51,7 +54,7 @@ router.get('/', function (req, res) {
             $('article').each(function (i, elem) {
                 data[i] =
                     {
-                        name: $($($(this))).find('h3').children().children().text(),
+                        name: $($($(this))).find('h3').children().text(),
                         brand: "Nordstrom",
                         brandLogo: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1f/Nordstrom_Logo.svg/1280px-Nordstrom_Logo.svg.png",
                         src: $(this).find('div').find('img').attr('src'),
@@ -59,9 +62,8 @@ router.get('/', function (req, res) {
                         price: {
                             prev: $($($(this))).find('div').eq(-2).children().last().text().split(" ")[0],
                             curr: $($($(this))).find('div').eq(-1).children().eq(-2).text().split(" ")[0].slice(1),
-                            discount: $($($(this))).find('div').eq(-1).children().last().html().split(" ")[0].slice(0, -1)
+                            discount: $($($(this))).find('div').eq(-1).children().last().html()
                         }
-
                     }
             })
             insertDataIntoDB(data)
@@ -76,8 +78,11 @@ router.get('/', function (req, res) {
     };
 
     scrape().then(() => {
+        console.log('done scraping')
+        // sortWordType();
+        parseFloatAllCurrPrices();
+        deleteAllDuplicates();
         return
-        // typeCounter();
     })
 
 })
