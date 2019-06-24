@@ -5,7 +5,9 @@ const puppeteer = require('puppeteer');
 const cheerio = require('cheerio');
 const mongojs = require("mongojs");
 const insertDataIntoDB = require('../../utils/lib/insertIntoDB');
-const typeCounter = require('../../utils/lib/sortWordType');
+const sortWordType = require('../../utils/lib/sortWordTypeMethod');
+const parseFloatAllCurrPrices = require('../../utils/lib/parseFloatAllCurrPrices');
+const deleteAllDuplicates = require('../../utils/lib/deleteAllDulicates');
 
 
 var databaseUrl = "garmet_DB";
@@ -15,9 +17,9 @@ db.on("error", function (error) {
     console.log("Database Error:", error);
 });
 
-const pagesToScrape = 2;
+const pagesToScrape = 20;
 
-router.get('/', function (req, res) {
+router.post('/', function (req, res) {
     let scrape = async () => {
         function wait(ms) {
             return new Promise(resolve => setTimeout(() => resolve(), ms));
@@ -92,7 +94,11 @@ router.get('/', function (req, res) {
 
     scrape().then((value) => {
         insertDataIntoDB(value);
-        // typeCounter();
+        setTimeout(() => {
+            sortWordType();
+            parseFloatAllCurrPrices();
+            deleteAllDuplicates();
+        }, 3000)
         res.send(value)
     })
 })

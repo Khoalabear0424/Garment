@@ -21,7 +21,7 @@ class App extends Component {
   }
 
   checkMethod = () => {
-    console.log(this.state)
+    alert(this.state.currentFilter)
   }
 
   handlePageChange = page => {
@@ -29,17 +29,17 @@ class App extends Component {
     window.scrollTo(0, 0)
   }
 
-  handleFilter = async (type) => {
-    this.handlePageChange(1)
+  handleFilter = async (type, brand = null, price = null) => {
     var { currentFilter } = this.state
-    currentFilter = type;
+
+    if (type) currentFilter = type;
+
     if (type === 'All') {
       var { data: clothes } = await getClothes();
       this.setState({ clothes, currentFilter })
     } else {
-      var { clothes, currentFilter } = this.state;
-      currentFilter = type;
-      getType(type).then((r) => {
+      var { clothes } = this.state;
+      getType(currentFilter, brand, price).then((r) => {
         clothes = r;
         this.setState({ clothes, currentFilter })
       })
@@ -57,6 +57,7 @@ class App extends Component {
       <div className="row">
         <div className="col-lg-2 col-md-2 col-sm-2">
           <ListGroup
+            checkState={this.checkMethod}
             selectedItem={currentFilter}
             onClickFilter={this.handleFilter}
             onPageChange={this.handlePageChange}

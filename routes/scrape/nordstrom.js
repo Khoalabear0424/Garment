@@ -5,7 +5,10 @@ const puppeteer = require('puppeteer');
 const cheerio = require('cheerio');
 var mongojs = require("mongojs");
 const insertDataIntoDB = require('../../utils/lib/insertIntoDB');
-const typeCounter = require('../../utils/lib/sortWordType');
+const sortWordType = require('../../utils/lib/sortWordTypeMethod');
+const parseFloatAllCurrPrices = require('../../utils/lib/parseFloatAllCurrPrices');
+const deleteAllDuplicates = require('../../utils/lib/deleteAllDulicates');
+
 
 
 var databaseUrl = "garmet_DB";
@@ -15,9 +18,9 @@ db.on("error", function (error) {
     console.log("Database Error:", error);
 });
 
-var pagesToScrape = 210;
+var pagesToScrape = 35;
 
-router.get('/', function (req, res) {
+router.post('/', function (req, res) {
     async function scrape() {
         function wait(ms) {
             return new Promise(resolve => setTimeout(() => resolve(), ms));
@@ -49,20 +52,21 @@ router.get('/', function (req, res) {
             var $ = cheerio.load(content);
             var data = []
             $('article').each(function (i, elem) {
-                data[i] =
-                    {
-                        name: $($($(this))).find('h3').children().children().text(),
-                        brand: "Nordstrom",
-                        brandLogo: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1f/Nordstrom_Logo.svg/1280px-Nordstrom_Logo.svg.png",
-                        src: $(this).find('div').find('img').attr('src'),
-                        link: 'https://shop.nordstrom.com' + $(this).find('a').attr('href'),
-                        price: {
-                            prev: $($($(this))).find('div').eq(-2).children().last().text().split(" ")[0],
-                            curr: $($($(this))).find('div').eq(-1).children().eq(-2).text().split(" ")[0].slice(1),
-                            discount: $($($(this))).find('div').eq(-1).children().last().html().split(" ")[0].slice(0, -1)
+                if ($($($(this))).find('div').eq(-1).children().last().html()) {
+                    data[i] =
+                        {
+                            name: $($($(this))).find('h3').children().text(),
+                            brand: "Nordstrom",
+                            brandLogo: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1f/Nordstrom_Logo.svg/1280px-Nordstrom_Logo.svg.png",
+                            src: $(this).find('div').find('img').attr('src'),
+                            link: 'https://shop.nordstrom.com' + $(this).find('a').attr('href'),
+                            price: {
+                                prev: $($($(this))).find('div').eq(-2).children().last().text().split(" ")[0],
+                                curr: $($($(this))).find('div').eq(-1).children().eq(-2).text().split(" ")[0].slice(1),
+                                discount: $($($(this))).find('div').eq(-1).children().last().html().split(" ")[0].slice(0, 2)
+                            }
                         }
-
-                    }
+                }
             })
             insertDataIntoDB(data)
             await wait(3000);
@@ -76,8 +80,11 @@ router.get('/', function (req, res) {
     };
 
     scrape().then(() => {
+        console.log('done scraping')
+        sortWordType();
+        parseFloatAllCurrPrices();
+        deleteAllDuplicates();
         return
-        // typeCounter();
     })
 
 })
