@@ -45,9 +45,9 @@ app.use('/parse-word-type', require('./routes/api/parseNames'));
 app.use('/all-data', require('./routes/api/getAllData'));
 app.use('/filter', require('./routes/api/filters'));
 
-// app.get("*", (req, res) => {
-//     res.sendFile(path.join(__dirname, "client", "build", "index.html"));
-// });
+app.get("*", (req, res) => {
+    res.sendFile(path.join(__dirname, "client", "build", "index.html"));
+});
 
 //----------Listen on port 4001------------//
 const port = process.env.PORT || 4001;
