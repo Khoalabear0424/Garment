@@ -7,6 +7,14 @@ const discountPercentDisplay = (discount, name) => {
     return discount ? '%off' : false;
 }
 
+const dollarSignDisplay = (price) => {
+    let firstChar = price.slice(0, 1);
+    if (firstChar !== "$") {
+        return `$${price}`;
+    }
+    return price;
+}
+
 class Article extends Component {
     render() {
         const { name, imgSrc, link, prev, curr, discount, brandLogo } = this.props
@@ -19,7 +27,7 @@ class Article extends Component {
                         <a href={link} className="itemName">{name} </a>
                         {/* <Like /> */}
                     </h6>
-                    <span className="originalPrice">${prev}</span>
+                    <span className="originalPrice">{dollarSignDisplay(prev)}</span>
                     <span className="price"> ${curr ? curr.toFixed(2) : curr} </span>
                     <span className="percentOff"> {discount}{discountPercentDisplay(discount, name)} </span>
                     <img className="figure-img img-fluid rounded brand" src={brandLogo} alt="brandLogo" />
