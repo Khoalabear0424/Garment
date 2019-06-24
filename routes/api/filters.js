@@ -18,13 +18,13 @@ router.get('/:type/:brand/:price', function (req, res) {
     console.log(`type=${type}, brand=${brand}, price=${price}`)
 
     const clothesTypeLookUp = {
-        'Tops': ['Top', 'V-Neck', 'Shirt', 'Blouse', 'Camisole', 'Overalls', 'Bodysuit'],
-        'Dresses': ['Dress', 'Floral', 'Skirt', 'MiniDress', 'Sundress', 'Minidress', 'Romper', 'Sweater-Dress'],
+        'Tops': ['Top', 'V-Neck', 'Shirt', 'Blouse', 'Camisole', 'Overalls', 'Bodysuit', 'Shirtdress', 'Jumpsuit', 'Bra'],
+        'Dresses': ['Blouse', 'Dress', 'Floral', 'Skirt', 'MiniDress', 'Sundress', 'Minidress', 'Romper', 'Sweater-Dress', 'Gown'],
         'Jackets': ['Jacket', 'Coat', 'Cardigan', 'Tunic', 'Pullover', 'Sweater-Coat'],
         'Pants': ['Pants', 'Jeans', 'Trousers', 'Jeans:', 'Boyjean', 'Boyjean:'],
         'Shorts': ['Shorts', 'Miniskirt', 'Skirt:', 'Shorts:'],
-        'Shoes': ['Flat', 'Slip-On', 'Vans', 'Shoe', 'Loafer', 'Mule', 'Pump', 'Clog', 'Sneakers', 'Slipper', 'Bootie', 'Boots'],
-        'Accessories': ['Sunglasses', 'Bandana', 'Socks', 'Hat', 'Sunhat', 'Beanie', 'Tights', 'Robe']
+        'Shoes': ['Flat', 'Slip-On', 'Vans', 'Shoe', 'Loafer', 'Mule', 'Pump', 'Clog', 'Sneakers', 'Slipper', 'Bootie', 'Boots', 'Sandal', 'Wedge'],
+        'Accessories': ['Earrings', 'Necklace', 'Sunglasses', 'Bandana', 'Socks', 'Hat', 'Sunhat', 'Beanie', 'Tights', 'Robe', 'Bag', 'Backpack', 'Tote', 'Leggings']
     }
 
     const clothesPriceLookUp = {
