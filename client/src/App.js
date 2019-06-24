@@ -12,8 +12,9 @@ class App extends Component {
     pageSize: 60,
     currentPage: 1,
     clothesTypes: ['All', 'Tops', 'Dresses', 'Jackets', 'Pants', 'Shorts', 'Shoes', 'Accessories', 'Misc'],
-    currentFilter: 'All',
-    priceFilterValue: '$ - $$'
+    currentFilter: null,
+    priceFilterValue: '$ - $$',
+    currentBrand: null,
   }
 
   async componentDidMount() {
@@ -30,19 +31,21 @@ class App extends Component {
     window.scrollTo(0, 0)
   }
 
-  handleFilter = async (type, brand = null, price = null) => {
-    var { currentFilter } = this.state
+  handleFilter = async (type, brand, price = null) => {
+    var { currentFilter, currentBrand } = this.state
 
     if (type) currentFilter = type;
+    if (brand === currentBrand) currentBrand = null;
+    else currentBrand = brand;
 
     if (type === 'All') {
       var { data: clothes } = await getClothes();
-      this.setState({ clothes, currentFilter })
+      this.setState({ clothes, currentFilter, currentBrand })
     } else {
       var { clothes } = this.state;
-      getType(currentFilter, brand, price).then((r) => {
+      getType(currentFilter, currentBrand, price).then((r) => {
         clothes = r;
-        this.setState({ clothes, currentFilter })
+        this.setState({ clothes, currentFilter, currentBrand })
       })
     }
   }
@@ -60,12 +63,16 @@ class App extends Component {
 
   render() {
     const { length: count } = this.state.clothes;
-    const { pageSize, currentPage, clothes: currentClothes, clothesTypes, currentFilter, priceFilterValue } = this.state;
+    const { pageSize, currentPage, clothes: currentClothes, clothesTypes, currentFilter, priceFilterValue, currentBrand } = this.state;
 
     const currClothesArray = paginate(currentClothes, currentPage, pageSize)
 
     return <div className="App">
-      <header><Navbar /></header>
+      <header><Navbar
+        onClickFilter={this.handleFilter}
+        priceFilterValue={priceFilterValue}>
+      </Navbar>
+      </header>
       <div className="row">
         <div className="col-lg-2 col-md-2 col-sm-2">
           <ListGroup
@@ -76,6 +83,7 @@ class App extends Component {
             clothesTypesArray={clothesTypes}
             priceFilterValue={priceFilterValue}
             onClickPriceFilter={this.handlePriceFilter}
+            currentBrand={currentBrand}
           />
         </div>
         <div className="col-lg-10 col-md-10 col-sm-10 justify-content-center">
