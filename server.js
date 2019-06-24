@@ -17,10 +17,10 @@ app.use(express.static(path.join(__dirname, "client", "build")))
 //Init Middleware
 app.use(express.json({ extended: false }));
 
-app.use(function (req, res, next) {
-    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
-    next();
-});
+// app.use(function (req, res, next) {
+//     res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
+//     next();
+// });
 
 var databaseUrl = process.env.MONGODB_URI || "garmet_DB";
 var collections = ["scrapedData", "savedItems"];
