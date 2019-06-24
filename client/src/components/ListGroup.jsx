@@ -2,7 +2,18 @@ import React, { Component } from 'react';
 
 class ListGroup extends Component {
     state = {
+        priceFilterValue: '$ - $$'
+    }
 
+    priceFilter = () => {
+        let { priceFilterValue } = this.state;
+        if (priceFilterValue === '$ - $$') {
+            priceFilterValue = '$$ - $'
+        } else {
+            priceFilterValue = '$ - $$'
+        }
+        this.setState({ priceFilterValue });
+        return priceFilterValue;
     }
 
     render() {
@@ -18,7 +29,7 @@ class ListGroup extends Component {
             )}
             <br></br>
             <li className="list-group-item"
-                onClick={() => onClickFilter(null, null, '$ - $$')}>
+                onClick={() => onClickFilter(null, null, this.priceFilter())}>
                 $ - $$
             </li>
         </ul>

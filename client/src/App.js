@@ -36,7 +36,7 @@ class App extends Component {
 
     if (type === 'All') {
       var { data: clothes } = await getClothes();
-      this.setState({ clothes })
+      this.setState({ clothes, currentFilter })
     } else {
       var { clothes } = this.state;
       getType(currentFilter, brand, price).then((r) => {
