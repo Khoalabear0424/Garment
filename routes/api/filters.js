@@ -36,7 +36,7 @@ router.get('/:type/:brand/:price', function (req, res) {
     let filterPrice = clothesPriceLookUp[price];
 
     db.scrapedData.find({
-        'type': clothesTypeLookUp[type] ? { $in: clothesTypeLookUp[type] } : { $exists: true },
+        'type': clothesTypeLookUp[type] ? { $in: clothesTypeLookUp[type] } : type === 'All' ? { $exists: true } : { $exists: false },
         'brand': brand === 'null' ? { $exists: true } : brand
     }).sort({
         'price.curr': filterPrice
