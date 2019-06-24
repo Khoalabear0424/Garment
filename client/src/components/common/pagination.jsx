@@ -3,11 +3,11 @@ import _ from 'lodash';
 
 const Pagination = props => {
     const { itemsCount, pageSize, onPageChange, currentPage } = props;
-    const pageCount = Math.ceil(itemsCount / pageSize);
-    if (pageCount === 1) return null;
-    const currentRange = Math.ceil(currentPage / 5);
-    const renderRange = (parseInt(pageCount - currentPage) === 0 ? currentPage : currentRange * 5 + 1);
-    const pages = _.range(currentRange * 5 - 4, (pageCount < 5 ? pageCount : renderRange));
+    const pageCount = Math.ceil(itemsCount / pageSize); //8
+    // if (pageCount === 1) return null;
+    const currentRange = Math.ceil(currentPage / 5); //curr page = 7, current range = 
+    const renderRange = parseInt(pageCount - currentPage) === 0 ? currentPage : currentRange * 5 + 1;
+    const pages = _.range(currentRange * 5 - 4, (pageCount < renderRange ? pageCount : renderRange));
 
     const nextButton = () => {
         if (currentPage === pageCount || pageCount < 5) return null
@@ -28,7 +28,8 @@ const Pagination = props => {
     }
 
     const elipses = () => {
-        if (parseInt(pageCount - currentPage) <= 5) return null
+        let lastIncrement = (Math.ceil(pageCount / 5) * 5) - 4
+        if (currentPage >= lastIncrement) return null
         return <li
             className="pagination-item no-hover">
             ...
