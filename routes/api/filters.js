@@ -29,8 +29,8 @@ router.get('/:type/:brand/:price', function (req, res) {
 
     const clothesPriceLookUp = {
         'null': 1,
-        '$ - $$': -1,
-        '$$ - $': 1
+        '$ - $$': 1,
+        '$$ - $': -1
     }
 
     let filterPrice = clothesPriceLookUp[price];
