@@ -1,23 +1,8 @@
 import React, { Component } from 'react';
 
 class ListGroup extends Component {
-    state = {
-        priceFilterValue: '$ - $$'
-    }
-
-    priceFilter = () => {
-        let { priceFilterValue } = this.state;
-        if (priceFilterValue === '$ - $$') {
-            priceFilterValue = '$$ - $'
-        } else {
-            priceFilterValue = '$ - $$'
-        }
-        this.setState({ priceFilterValue });
-        return priceFilterValue;
-    }
-
     render() {
-        const { onClickFilter, clothesTypesArray, selectedItem, onPageChange, checkState } = this.props;
+        const { onClickFilter, clothesTypesArray, selectedItem, priceFilterValue, onClickPriceFilter } = this.props;
         return <ul className="list-group">
             {clothesTypesArray.map((item, index) =>
                 <li
@@ -29,8 +14,8 @@ class ListGroup extends Component {
             )}
             <br></br>
             <li className="list-group-item"
-                onClick={() => onClickFilter(null, null, this.priceFilter())}>
-                {this.state.priceFilterValue}
+                onClick={() => onClickFilter(null, null, onClickPriceFilter())}>
+                {priceFilterValue}
             </li>
         </ul>
     }

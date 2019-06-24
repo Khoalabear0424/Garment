@@ -12,7 +12,8 @@ class App extends Component {
     pageSize: 60,
     currentPage: 1,
     clothesTypes: ['All', 'Tops', 'Dresses', 'Jackets', 'Pants', 'Shorts', 'Shoes', 'Accessories', 'Misc'],
-    currentFilter: 'All'
+    currentFilter: 'All',
+    priceFilterValue: '$ - $$'
   }
 
   async componentDidMount() {
@@ -46,9 +47,20 @@ class App extends Component {
     }
   }
 
+  handlePriceFilter = () => {
+    let { priceFilterValue } = this.state;
+    if (priceFilterValue === '$ - $$') {
+      priceFilterValue = '$$ - $'
+    } else {
+      priceFilterValue = '$ - $$'
+    }
+    this.setState({ priceFilterValue });
+    return priceFilterValue;
+  }
+
   render() {
     const { length: count } = this.state.clothes;
-    const { pageSize, currentPage, clothes: currentClothes, clothesTypes, currentFilter } = this.state;
+    const { pageSize, currentPage, clothes: currentClothes, clothesTypes, currentFilter, priceFilterValue } = this.state;
 
     const currClothesArray = paginate(currentClothes, currentPage, pageSize)
 
@@ -62,6 +74,8 @@ class App extends Component {
             onClickFilter={this.handleFilter}
             onPageChange={this.handlePageChange}
             clothesTypesArray={clothesTypes}
+            priceFilterValue={priceFilterValue}
+            onClickPriceFilter={this.handlePriceFilter}
           />
         </div>
         <div className="col-lg-10 col-md-10 col-sm-10 justify-content-center">
