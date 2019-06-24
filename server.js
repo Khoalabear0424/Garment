@@ -50,7 +50,7 @@ app.get("*", (req, res) => {
 });
 
 //----------Listen on port 4001------------//
-const port = process.env.PORT || 4001;
+let port = process.env.PORT || 4001;
 app.listen(port, function () {
     console.log(`App running on port ${port}...`);
 });
