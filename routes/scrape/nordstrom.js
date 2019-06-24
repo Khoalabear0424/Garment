@@ -18,7 +18,7 @@ db.on("error", function (error) {
     console.log("Database Error:", error);
 });
 
-var pagesToScrape = 10;
+var pagesToScrape = 4;
 
 router.get('/', function (req, res) {
     async function scrape() {
@@ -52,19 +52,21 @@ router.get('/', function (req, res) {
             var $ = cheerio.load(content);
             var data = []
             $('article').each(function (i, elem) {
-                data[i] =
-                    {
-                        name: $($($(this))).find('h3').children().text(),
-                        brand: "Nordstrom",
-                        brandLogo: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1f/Nordstrom_Logo.svg/1280px-Nordstrom_Logo.svg.png",
-                        src: $(this).find('div').find('img').attr('src'),
-                        link: 'https://shop.nordstrom.com' + $(this).find('a').attr('href'),
-                        price: {
-                            prev: $($($(this))).find('div').eq(-2).children().last().text().split(" ")[0],
-                            curr: $($($(this))).find('div').eq(-1).children().eq(-2).text().split(" ")[0].slice(1),
-                            discount: $($($(this))).find('div').eq(-1).children().last().html()
+                if ($($($(this))).find('div').eq(-1).children().last().html()) {
+                    data[i] =
+                        {
+                            name: $($($(this))).find('h3').children().text(),
+                            brand: "Nordstrom",
+                            brandLogo: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1f/Nordstrom_Logo.svg/1280px-Nordstrom_Logo.svg.png",
+                            src: $(this).find('div').find('img').attr('src'),
+                            link: 'https://shop.nordstrom.com' + $(this).find('a').attr('href'),
+                            price: {
+                                prev: $($($(this))).find('div').eq(-2).children().last().text().split(" ")[0],
+                                curr: $($($(this))).find('div').eq(-1).children().eq(-2).text().split(" ")[0].slice(1),
+                                discount: $($($(this))).find('div').eq(-1).children().last().html().split(" ")[0].slice(0, 2)
+                            }
                         }
-                    }
+                }
             })
             insertDataIntoDB(data)
             await wait(3000);
