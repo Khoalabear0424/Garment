@@ -38,8 +38,7 @@ const Pagination = props => {
 
     const lastPage = () => {
         return <li
-            className="pagination-item-elipses"
-            className={pageCount === currentPage ? 'selected-link pagination-item' : 'pagination-item'}
+            className={pageCount === currentPage ? 'selected-link pagination-item pagination-item-elipses' : 'pagination-item pagination-item-elipses'}
             onClick={() => onPageChange(pageCount)}>
             {pageCount}
         </li>

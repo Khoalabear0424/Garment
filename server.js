@@ -17,10 +17,10 @@ app.use(express.static(path.join(__dirname, "client", "build")))
 //Init Middleware
 app.use(express.json({ extended: false }));
 
-// app.use(function (req, res, next) {
-//     res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
-//     next();
-// });
+app.use(function (req, res, next) {
+    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
+    next();
+});
 
 var databaseUrl = process.env.MONGODB_URI || "garmet_DB";
 var collections = ["scrapedData", "savedItems"];
@@ -49,8 +49,8 @@ app.use('/filter', require('./routes/api/filters'));
 //     res.sendFile(path.join(__dirname, "client", "build", "index.html"));
 // });
 
-//----------Listen on port 3001------------//
-const port = process.env.PORT || 3001;
+//----------Listen on port 4001------------//
+const port = process.env.PORT || 4001;
 app.listen(port, function () {
     console.log(`App running on port ${port}!`);
 });
