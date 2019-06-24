@@ -2,22 +2,20 @@ const express = require('express');
 const app = express();
 const router = express.Router();
 const puppeteer = require('puppeteer');
-const cheerio = require('cheerio');
 const mongojs = require("mongojs");
 const insertDataIntoDB = require('../../utils/lib/insertIntoDB');
 const sortWordType = require('../../utils/lib/sortWordTypeMethod');
 const parseFloatAllCurrPrices = require('../../utils/lib/parseFloatAllCurrPrices');
 const deleteAllDuplicates = require('../../utils/lib/deleteAllDulicates');
 
-
-var databaseUrl = "garmet_DB";
+var databaseUrl = process.env.MONGODB_URI || "garmet_DB";
 var collections = ["scrapedData", "savedItems"];
 var db = mongojs(databaseUrl, collections);
 db.on("error", function (error) {
     console.log("Database Error:", error);
 });
 
-const pagesToScrape = 20;
+const pagesToScrape = 2;
 
 router.post('/', function (req, res) {
     let scrape = async () => {

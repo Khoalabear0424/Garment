@@ -1,7 +1,7 @@
-
-var databaseUrl = "garmet_DB";
-var collections = ["scrapedData", "savedItems"];
 const mongojs = require("mongojs");
+
+var databaseUrl = process.env.MONGODB_URI || "garmet_DB";
+var collections = ["scrapedData", "savedItems"];
 var db = mongojs(databaseUrl, collections);
 
 db.on("error", function (error) {
