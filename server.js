@@ -50,8 +50,9 @@ app.get("*", (req, res) => {
 });
 
 //----------Listen on port 4001------------//
-app.listen(process.env.PORT, function () {
-    console.log(`App running on port ${process.env.PORT}...`);
+let port = process.env.PORT || 4001;
+app.listen(port, function () {
+    console.log(`App running on port ${port}...`);
 });
 
 
