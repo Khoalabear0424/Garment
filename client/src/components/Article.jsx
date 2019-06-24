@@ -1,10 +1,7 @@
 import React, { Component } from 'react';
 import '../App.css';
-import Like from "./common/like";
 
 const discountPercentDisplay = (priceCurr, discount, name) => {
-    console.log(`discount: ${discount}, itemName: ${name}, isFinite ${isFinite(discount)}`)
-
     return priceCurr ? discount + '%off' : false;
 }
 
