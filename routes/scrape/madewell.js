@@ -5,7 +5,7 @@ const puppeteer = require('puppeteer');
 const cheerio = require('cheerio');
 const mongojs = require("mongojs");
 const insertDataIntoDB = require('../../utils/lib/insertIntoDB');
-const sortWordType = require('../../utils/lib/sortWordType');
+const sortWordType = require('../../utils/lib/sortWordTypeMethod');
 const parseFloatAllCurrPrices = require('../../utils/lib/parseFloatAllCurrPrices');
 const deleteAllDuplicates = require('../../utils/lib/deleteAllDulicates');
 
@@ -17,7 +17,7 @@ db.on("error", function (error) {
     console.log("Database Error:", error);
 });
 
-const pagesToScrape = 20;
+const pagesToScrape = 2;
 
 router.get('/', function (req, res) {
     let scrape = async () => {
@@ -94,9 +94,11 @@ router.get('/', function (req, res) {
 
     scrape().then((value) => {
         insertDataIntoDB(value);
-        sortWordType();
-        parseFloatAllCurrPrices();
-        deleteAllDuplicates();
+        setTimeout(() => {
+            sortWordType();
+            parseFloatAllCurrPrices();
+            deleteAllDuplicates();
+        }, 3000)
         res.send(value)
     })
 })
