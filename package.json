@@ -21,7 +21,7 @@
   },
   "homepage": "https://github.com/Khoalabear0424/Garmet#readme",
   "dependencies": {
-    "axios": "0.18.1",
+    "axios": "0.21.1",
     "body-parser": "1.19.0",
     "cheerio": "1.0.0-rc.3",
     "ejs": "2.6.1",
