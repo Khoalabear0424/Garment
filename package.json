@@ -33,7 +33,7 @@
     "mongoose": "5.5.9",
     "dotenv": "8.0.0",
     "cors": "2.8.5",
-    "config": "3.1.0"
+    "config": "3.3.8"
   },
   "engines": {
     "node": "12.1.0"
